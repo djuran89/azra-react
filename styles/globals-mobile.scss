@@ -1,0 +1,10 @@
+@import "varibles";
+
+@media only screen and (max-width: 600px) {
+	header {
+		height: $headerHeightMobile;
+	}
+	.content {
+		margin: 0rem !important;
+	}
+}

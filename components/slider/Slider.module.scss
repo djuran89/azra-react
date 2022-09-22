@@ -1,0 +1,66 @@
+@import "./../../styles/varibles.scss";
+
+.slideHolder {
+	position: relative;
+	overflow: hidden;
+}
+.sliderImg {
+	position: absolute;
+	top: 50%;
+	left: 70%;
+	transform: translate(-50%, -50%);
+	height: 100%;
+}
+.slideHolder {
+	button {
+		display: flex;
+		justify-content: flex-start;
+		float: right;
+		gap: 15px;
+		margin-top: 25px;
+		align-items: center;
+		background-color: $mainColor;
+		color: #fff;
+		height: 52px;
+		padding: 0 16px;
+		padding-left: 32px;
+		border-radius: 52px;
+		border: 0;
+		border: 1px solid darken($mainColor, 20%);
+		font-size: 1.1rem;
+		font-weight: 200;
+		box-shadow: 3px 3px 12px rgba(0, 0, 0, 0.4);
+		span {
+			height: 22px;
+			width: 22px;
+			background-color: rgba(255, 255, 255, 0.7);
+			color: #333 !important;
+			border-radius: 22px;
+			display: flex;
+			text-align: center;
+			align-items: center;
+		}
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	.slideHolder {
+		height: calc(100vh - $headerHeight);
+		.text {
+			position: absolute;
+			width: 60%;
+			font-size: 3.4rem;
+			color: #fff;
+			font-weight: 800;
+			line-height: 3.4rem;
+			bottom: 60px;
+			text-align: right;
+			right: 30px;
+			text-transform: uppercase;
+			text-shadow: 8px 8px 16px rgba(0, 0, 0, 0.9);
+			.slideText {
+				opacity: 0.7;
+			}
+		}
+	}
+}

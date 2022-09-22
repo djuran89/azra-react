@@ -1,0 +1,95 @@
+@import "./../../styles/varibles.scss";
+.productHolder {
+	display: flex;
+	flex-direction: row;
+}
+.productImage {
+	display: flex;
+	flex-direction: column;
+	width: 60%;
+	// flex: 0.6;
+	align-items: center;
+	justify-content: center;
+}
+.productInfo {
+	display: flex;
+	flex-direction: column;
+	gap: 12px;
+
+	h2 {
+		font-size: 1.4rem;
+		font-weight: 400;
+	}
+	h3 {
+		font-size: 0.9rem;
+		font-weight: 300;
+	}
+	.buy {
+		display: flex;
+		gap: 12px;
+		flex-direction: row;
+	}
+	.quantity {
+		input {
+			height: 30px;
+			width: 60px;
+			text-align: center;
+			border-radius: 0;
+			border: 0;
+			border-top: 1px solid #ccc;
+			border-bottom: 1px solid #ccc;
+		}
+		button {
+			width: 30px;
+			height: 30px;
+			border-radius: 0;
+			border: 1px solid #ccc;
+		}
+		button:hover {
+			background-color: rgba(0, 0, 0, 0.1);
+		}
+	}
+	.order {
+		button {
+			height: 30px;
+			padding: 0px 44px;
+			border-radius: 0;
+			border: 1px solid darken($primaryBGColor, 10%);
+			color: $primaryColor;
+			background-color: $primaryBGColor;
+		}
+		button:hover {
+			background-color: darken($primaryBGColor, 10%);
+			border-color: darken($primaryBGColor, 20%);
+		}
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	.productHolder {
+		flex-direction: column;
+	}
+	.productHolder section {
+		// height: 100vh;
+	}
+	.productHolder section:nth-child(1) {
+		// height: calc(100vh - $headerHeightMobile);
+	}
+	.productImage {
+		width: 100%;
+		padding: 0 15px;
+		flex-direction: column;
+		justify-content: flex-start;
+		h2 {
+			font-size: 33px;
+		}
+		p {
+			font-size: 1rem;
+			text-align: center;
+			font-weight: 300;
+		}
+		img {
+			height: 60%;
+		}
+	}
+}
