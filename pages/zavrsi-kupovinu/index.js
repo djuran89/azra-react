@@ -46,7 +46,7 @@ const FinishOrder = () => {
 		}
 
 		axios
-			.post("http://192.168.0.23:4000/api/order", { ...info, Orders: orders })
+			.post("https://18.185.113.237:4000/api/order", { ...info, Orders: orders })
 			.then(() => {
 				setInfo(infoObject);
 				enqueueSnackbar("Poručbina je prihvaćena. Hvala.", { variant: "success" });
