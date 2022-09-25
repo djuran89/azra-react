@@ -72,7 +72,7 @@ const Product = (props) => {
 				<div id="left-slide">
 					<Link href={`#${products[index - 1].name}`}>
 						<a>
-							<span class="material-symbols-outlined">arrow_back_ios</span>
+							<span className="material-symbols-outlined">arrow_back_ios</span>
 							{products[index - 1].name}
 						</a>
 					</Link>
@@ -84,7 +84,7 @@ const Product = (props) => {
 					<Link href={`#${products[index + 1].name}`}>
 						<a>
 							{products[index + 1].name}
-							<span class="material-symbols-outlined">arrow_forward_ios</span>
+							<span classNamep="material-symbols-outlined">arrow_forward_ios</span>
 						</a>
 					</Link>
 				</div>
