@@ -16,14 +16,21 @@
 }
 .products {
 	display: flex;
-	gap: 45px;
+	gap: 12px;
+	flex-wrap: wrap;
+	padding-bottom: 24px;
 	.article {
 		display: flex;
-		flex: 1 0;
+		// flex: 1 0;
+		flex: 1 0 calc(25% - 12px);
+		flex-grow: 1;
+		width: calc(25% - 12px);
 		flex-direction: column;
 
 		img {
 			max-height: 300px;
+			height: auto;
+			max-width: 90%;
 		}
 	}
 	.article > a {
@@ -72,9 +79,10 @@
 
 @media only screen and (max-width: 600px) {
 	.products {
-		margin: 0px 25px;
+		margin: 0px 12px;
 		flex-direction: column;
-		section {
+		.article {
+			width: 100%;
 			flex: 1;
 			margin-bottom: 1rem;
 		}

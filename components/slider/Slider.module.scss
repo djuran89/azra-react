@@ -3,14 +3,32 @@
 .slideHolder {
 	position: relative;
 	overflow: hidden;
+	height: calc(100vh - $headerHeight);
+	.text {
+		position: absolute;
+		width: 400px;
+		font-size: 3.4rem;
+		color: #fff;
+		font-weight: 800;
+		line-height: 3.4rem;
+		bottom: 7rem;
+		text-align: right;
+		right: 5rem;
+		text-transform: uppercase;
+		text-shadow: 8px 8px 16px rgba(0, 0, 0, 0.9);
+		.slideText {
+			opacity: 1.7;
+		}
+	}
+	.sliderImg {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -50%);
+		width: 100%;
+	}
 }
-.sliderImg {
-	position: absolute;
-	top: 50%;
-	left: 70%;
-	transform: translate(-50%, -50%);
-	height: 100%;
-}
+
 .slideHolder {
 	button {
 		display: flex;
@@ -45,7 +63,7 @@
 
 @media only screen and (max-width: 600px) {
 	.slideHolder {
-		height: calc(100vh - $headerHeight);
+		height: calc(100vh - $headerHeight - 5 * var(--vh));
 		.text {
 			position: absolute;
 			width: 60%;
@@ -59,8 +77,34 @@
 			text-transform: uppercase;
 			text-shadow: 8px 8px 16px rgba(0, 0, 0, 0.9);
 			.slideText {
-				opacity: 0.7;
+				// opacity: 0.7;
 			}
+		}
+		.sliderImg {
+			position: absolute;
+			top: 50%;
+			left: 70%;
+			transform: translate(-50%, -50%);
+			height: 100%;
+			width: auto;
+		}
+	}
+}
+
+@media only screen and (min-width: 1920px) {
+	.slideHolder {
+		.text {
+			position: absolute;
+			width: 700px;
+			font-size: 6.4rem;
+			color: #fff;
+			font-weight: 800;
+			line-height: 6.4rem;
+			bottom: 7rem;
+			text-align: right;
+			right: 5rem;
+			text-transform: uppercase;
+			text-shadow: 8px 8px 16px rgba(0, 0, 0, 0.9);
 		}
 	}
 }

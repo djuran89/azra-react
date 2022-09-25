@@ -2,7 +2,7 @@
 $borderColor: #ccc;
 $headerHeight: 56px;
 $footerHeight: 105px;
-$singleOrderHeight: 76px;
+$singleOrderHeight: 86px;
 
 .basket {
   display: flex;
@@ -10,7 +10,7 @@ $singleOrderHeight: 76px;
   justify-content: space-between;
   position: fixed;
   height: 100%;
-  width: 80%;
+  width: 400px;
   background-color: #fff;
   border-left: 1px solid $borderColor;
   top: 0;
@@ -41,11 +41,26 @@ $singleOrderHeight: 76px;
       border-bottom: 1px solid $borderColor;
       font-size: 12px;
       .imgHolder {
+        position: relative;
         display: flex;
         justify-content: center;
         align-items: center;
         height: $singleOrderHeight;
         width: $singleOrderHeight;
+      }
+      .quantity {
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 12px;
+        font-weight: 800;
+        top: 0px;
+        left: 0px;
+        height:18px;
+        width:18px;
+        background-color:#333;
+        color: #fff;
       }
       .nameProduct {
         flex: 1;
@@ -126,4 +141,10 @@ $singleOrderHeight: 76px;
 }
 .basket.close {
   right: -80%;
+}
+
+@media only screen and (max-width: 600px) {
+	.basket {
+    width: 80%;
+  }
 }

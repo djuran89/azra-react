@@ -7,6 +7,7 @@ import { productsAction } from "./../redux/action";
 import styles from "./../styles/Home.module.scss";
 import Slider from "./../components/slider/slider";
 import Header from "./../components/header/header";
+import Loading from "./../components/loading/loading";
 
 const Home = ({ ...props }) => {
 	const dispatch = useDispatch();
@@ -19,19 +20,17 @@ const Home = ({ ...props }) => {
 				.get(`/api/product`)
 				.then((res) => setProducts(res))
 				.catch((err) => httpErrorHandler(err));
-
-		products.length === 0 && console.log("Called.");
 	}, []);
 
 	const productsRender = products.map((el, i) => (
 		<section className={styles.article} key={el.id}>
-			<Link className="image" href={`proizvod#slide-${i + 1}`}>
+			<Link className="image" href={`proizvod#${el.name}`}>
 				<a>
 					<h2>{el.name}</h2>
 					<figure>
-						<img src={`./images/${el.images[0].src}`} alt={`${el.name}`} />
+						<img src={`./images/${el.image}`} alt={`${el.name}`} />
 					</figure>
-					<div className={styles.description}>{el.smallDescription}</div>
+					{/* <div className={styles.description}>{el.smallDescription}</div> */}
 					<div className={styles.infoProduct}>
 						<div className={styles.priceText}>Cena</div>
 						<div className={styles.price}>{el.price},00 RSD</div>
@@ -41,16 +40,17 @@ const Home = ({ ...props }) => {
 		</section>
 	));
 
+	if (products.length === 0) return <Loading />;
 	return (
 		<>
 			<Header />
 			<Slider />
-
 			<section className={styles.title}>
 				<h2>Proizvodi</h2>
 			</section>
-
-			<section className={styles.products}>{productsRender}</section>
+			<main className="content">
+				<section className={styles.products}>{productsRender}</section>
+			</main>
 		</>
 	);
 };

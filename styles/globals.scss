@@ -30,9 +30,24 @@ header {
 	display: flex;
 	align-items: center;
 	height: $headerHeight;
-	padding: 0 8px;
 	border-bottom: 1px solid;
 	border-color: $borderColor;
+	.left {
+		height: 100%;
+	}
+	.right {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 16px;
+	}
+	.logo {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		height: calc($headerHeight - 16px);
+		margin: 0px 8px;
+	}
 	.content > div {
 		display: flex;
 	}
@@ -41,12 +56,13 @@ header {
 		justify-content: space-between;
 		align-items: center;
 		width: 100%;
+		max-width: 100% !important;
 		h1 {
 			font-size: 1.6rem;
 			font-weight: 400;
 		}
 		.center {
-			display:flex;
+			display: flex;
 			flex: 1;
 			justify-content: flex-end;
 			margin-right: 25px;
@@ -61,7 +77,6 @@ header.mobile {
 	background-color: transparent;
 	z-index: 10;
 	border: 0;
-	padding: 0 16px;
 }
 
 footer {
@@ -160,18 +175,6 @@ footer {
 	margin: 0px 5px;
 	position: relative;
 }
-// .slider .slidesPosition > a:active {
-//   background: red;
-// }
-// .slider .slidesPosition > a:focus {
-//   background: #000;
-// }
-.slider .slidesPosition a.active {
-	background: red;
-}
-.slider a.active {
-	background-color: red !important;
-}
 .slidesPosition {
 	position: absolute;
 	font-size: 32px;
@@ -179,7 +182,6 @@ footer {
 	left: 50%;
 	transform: translate(-50%, 0%);
 }
-
 .backBG {
 	height: 60%;
 	width: 100%;
@@ -204,24 +206,100 @@ input {
 	user-select: all;
 }
 
+.btn-header {
+	overflow: hidden;
+	height: 42px;
+	width: 42px;
+	cursor: pointer;
+	img {
+		width: 100%;
+	}
+}
+.btn-header.call {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	color: #fff;
+	height: 35px;
+	width: 35px;
+	border-radius: 50%;
+	background-color: $mainColor;
+	border: 2px solid darken($mainColor, 20%);
+	border: 3px solid #fff;
+	box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
+	span {
+		font-size: 18px;
+		font-variation-settings: "FILL" 1, "wght" 400, "GRAD" 0, "opsz" 48;
+	}
+}
+#left-slide,
+#right-slide {
+	position: absolute;
+	top: 50%;
+}
+#right-slide a,
+#left-slide a {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+#left-slide {
+	left: 25px;
+}
+#right-slide {
+	right: 25px;
+}
+
 @supports (scroll-snap-type) {
 	.slider > a {
 		display: none;
 	}
 }
-
-@media only screen and (max-width: 1440px) {
+@media only screen and (max-width: 600px) {
 	.content {
 		width: auto;
+		padding: 0px 8px !important;
+	}
+	.right {
+		gap: 8px;
+	}
+	.MuiCollapse-wrapperInner {
+		width: 80% !important;
+	}
+	#left-slide,
+	#right-slide {
+		display: none;
+	}
+}
+
+@media only screen and (min-width: 1200px) {
+	.content {
+		max-width: 1200px;
+		width: auto;
+		margin: 1.25rem auto;
+	}
+	header .content {
 		margin: 1.25rem;
 	}
 }
 
 @media (prefers-color-scheme: dark) {
 }
-#slide-1 img {
-	bottom: -50px;
+@media screen and (min-width: 1290px) {
+	.slides {
+		height: calc(100vh - $headerHeight);
+		overflow: hidden;
+	}
 }
-#slide-3 img {
-	bottom: -15px;
+@media screen and (min-width: 900px) and (max-width: 1290px) {
+	.slides {
+		height: calc(100vh - $headerHeight);
+		overflow: hidden;
+	}
+	.slides > div {
+		align-items: flex-start;
+	}
+	.backBG {
+		height: 70%;
+	}
 }

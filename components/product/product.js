@@ -1,4 +1,6 @@
+import { useSnackbar } from "notistack";
 import React from "react";
+import Link from "next/link";
 import { useSelector, useDispatch } from "react-redux";
 
 import { ordersAction } from "../../redux/action";
@@ -7,18 +9,28 @@ import style from "./Product.module.scss";
 const Product = (props) => {
 	const { product, products, pageNumber } = props;
 	const dispatch = useDispatch();
-	const [orders, setOrders] = [useSelector((state) => state.orders), (state) => dispatch(ordersAction.setOrder(state))];
+	const { enqueueSnackbar } = useSnackbar();
+	const [orders, setOrders, addOrderQuantity] = [useSelector((state) => state.orders), (state) => dispatch(ordersAction.setOrder(state)), (state) => dispatch(ordersAction.addQuantity(state))];
 	const [quantity, setQuantity] = React.useState(1);
 	const [toucheStart, setToucheStart] = React.useState([0, 0]);
 	const [toucheMove, setToucheMove] = React.useState([0, 0]);
 	const [scrollTop, setScrollTop] = React.useState(0);
 	const screenHeight = document.documentElement.clientHeight;
 	const productNumber = products.map((el) => el.id).indexOf(product.id);
+	// console.log(orders);
 
-	const onCreateOrder = () => setOrders([...orders, { ...product, quantity }]);
 	const removeQuantity = () => quantity > 1 && setQuantity(--quantity);
 	const addQuantity = () => setQuantity(++quantity);
-
+	const onCreateOrder = () => {
+		setQuantity(1);
+		enqueueSnackbar("Dodato u korpu.");
+		const index = orders.map((el) => el.id).indexOf(product.id);
+		if (index === -1) {
+			setOrders([...orders, { ...product, quantity }]);
+		} else {
+			addOrderQuantity({ ...product, quantity: quantity + orders[index].quantity });
+		}
+	};
 	const scrollTo = (top) => window.scrollTo({ top: top, behavior: "smooth" });
 	const swipeUp = () => {
 		const scroll = scrollTop - screenHeight;
@@ -47,16 +59,39 @@ const Product = (props) => {
 
 	//   return <>PROD</>;
 	// onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}
-
-	const renderSliders = products.map((el, i) => <a key={i} style={{ borderColor: products[productNumber].colors[1], backgroundColor: productNumber === i ? products[productNumber].colors[1] : "transparent" }} href={`#slide-${i + 1}`}></a>);
+	const index = products.map((el) => el.id).indexOf(product.id);
+	const lastIndex = products.length;
+	const renderSliders = products.map((el, i) => <a key={i} style={{ borderColor: products[productNumber].colors[1], backgroundColor: productNumber === i ? products[productNumber].colors[1] : "transparent" }} href={`#${el.name}`}></a>);
 
 	if (products.length === 0) return <>Loading...</>;
-
+	// console.log(products[index].name)
+	console.log(lastIndex);
 	return (
 		<section className={style.productHolder} onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
+			{index !== 0 && (
+				<div id="left-slide">
+					<Link href={`#${products[index - 1].name}`}>
+						<a>
+							<span class="material-symbols-outlined">arrow_back_ios</span>
+							{products[index - 1].name}
+						</a>
+					</Link>
+				</div>
+			)}
+
+			{index + 1 !== lastIndex && (
+				<div id="right-slide">
+					<Link href={`#${products[index + 1].name}`}>
+						<a>
+							{products[index + 1].name}
+							<span class="material-symbols-outlined">arrow_forward_ios</span>
+						</a>
+					</Link>
+				</div>
+			)}
 			<section className={style.productImage}>
 				<div className={style.imageHolder}>
-					<img src={`./images/${product.images[0].src}`} alt={product.name} />
+					<img src={`./images/${product.image}`} alt={product.name} />
 				</div>
 
 				<div className={style.slidersBtn}>{renderSliders}</div>
