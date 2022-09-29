@@ -26,10 +26,65 @@ $adminPrimaryColor: $mainColor;
 		display: block;
 	}
 }
+input[type="file"] {
+	opacity: 0;
+}
+.data-table-search {
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+	div {
+		display: flex;
+	}
+	.btn-create {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		gap: 8px;
+		height: 32px;
+		padding: 0px 8px;
+		padding-right: 16px;
+		border: 0;
+		outline: 0;
+		background: #00695c;
+		color: #fff;
+		span {
+			font-size: 18px;
+			font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 48;
+		}
+	}
+}
 .admin-header {
 	display: flex;
 	justify-content: space-between;
 	margin: 0px 16px;
+}
+.admin-left {
+	display: flex;
+	gap: 15px;
+}
+.color-picker {
+	display: flex;
+	gap: 25px;
+	// justify-content: space-between;
+	margin-bottom: 25px;
+	.preview {
+		width: 200px;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		flex-direction: column;
+		flex: 1;
+		img {
+			height: 150px;
+		}
+		.crcle-btn {
+			height: 22px;
+			width: 22px;
+			border-radius: 22px;
+			background-color: red;
+		}
+	}
 }
 .btn {
 	color: #fff;
@@ -43,7 +98,8 @@ $adminPrimaryColor: $mainColor;
 .btn-logout {
 	background-color: #333;
 }
-.btn-remove {
+.btn-remove,
+.btn-edit {
 	display: flex;
 	height: 32px;
 	width: 32px;
@@ -58,6 +114,36 @@ $adminPrimaryColor: $mainColor;
 		font-size: 22px;
 		font-variation-settings: "FILL" 0, "wght" 200, "GRAD" 0, "opsz" 48;
 	}
+}
+.btn-edit {
+	color: #fff;
+	background-color: #00695c;
+	border: 1px solid #00695c;
+	span {
+		font-size: 22px;
+		font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
+	}
+}
+#clear {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 32px;
+	width: 32px;
+	border: 0;
+	outline: 0;
+	background: #00695c;
+	color: #fff;
+	span {
+		font-size: 18px;
+		font-variation-settings: "FILL" 0, "wght" 300, "GRAD" 0, "opsz" 48;
+	}
+}
+#search {
+	height: 32px;
+	padding: 0px 12px;
+	border: 1px solid #ccc;
+	border-radius: 0px;
 }
 .admin-panel {
 	width: 100vw;

@@ -23,7 +23,7 @@ const Basket = (props) => {
 		<div key={i} className={style.singleOrder}>
 			<div className={style.imgHolder}>
 				<div className={style.quantity}>{el.quantity}</div>
-				<img src={`./images/${el.image}`} alt={el.Name} />
+				<img src={el.image} alt={el.Name} />
 			</div>
 			<div className={style.nameProduct}>{el.name}</div>
 			<div>

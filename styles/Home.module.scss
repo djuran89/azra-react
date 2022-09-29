@@ -22,8 +22,8 @@
 	.article {
 		display: flex;
 		// flex: 1 0;
-		flex: 1 0 calc(25% - 12px);
-		flex-grow: 1;
+		// flex: 1 0 calc(25% - 12px);
+		// flex-grow: 1;
 		width: calc(25% - 12px);
 		flex-direction: column;
 

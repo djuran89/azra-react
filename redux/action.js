@@ -25,12 +25,14 @@ export const ordersSlice = createSlice({
 export const ordersAction = ordersSlice.actions;
 
 // Products
+const onlyUnique = (value, index, self) => self.indexOf(value) === index;
 export const productsSlice = createSlice({
 	name: "products",
 	initialState: [],
 	reducers: {
 		getProducts: (state) => state,
 		setProducts: (state, action) => (state = action.payload),
+		category: (state) => (state = []),
 	},
 });
 export const productsAction = productsSlice.actions;

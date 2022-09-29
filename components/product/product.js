@@ -16,15 +16,20 @@ const Product = (props) => {
 	const [toucheMove, setToucheMove] = React.useState([0, 0]);
 	const [scrollTop, setScrollTop] = React.useState(0);
 	const screenHeight = document.documentElement.clientHeight;
-	const productNumber = products.map((el) => el.id).indexOf(product.id);
-	// console.log(orders);
+	const productNumber = products.map((el) => el._id).indexOf(product._id);
+
+	const makeColorRGBA = (color) => {
+		if (!color) return "#fff";
+		const { r, g, b, a } = color;
+		return `rgba(${r},${g},${b},${a})`;
+	};
 
 	const removeQuantity = () => quantity > 1 && setQuantity(--quantity);
 	const addQuantity = () => setQuantity(++quantity);
 	const onCreateOrder = () => {
 		setQuantity(1);
 		enqueueSnackbar("Dodato u korpu.");
-		const index = orders.map((el) => el.id).indexOf(product.id);
+		const index = orders.map((el) => el._id).indexOf(product._id);
 		if (index === -1) {
 			setOrders([...orders, { ...product, quantity }]);
 		} else {
@@ -59,13 +64,12 @@ const Product = (props) => {
 
 	//   return <>PROD</>;
 	// onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}
-	const index = products.map((el) => el.id).indexOf(product.id);
+	const index = products.map((el) => el._id).indexOf(product._id);
 	const lastIndex = products.length;
-	const renderSliders = products.map((el, i) => <a key={i} style={{ borderColor: products[productNumber].colors[1], backgroundColor: productNumber === i ? products[productNumber].colors[1] : "transparent" }} href={`#${el.name}`}></a>);
+	const renderSliders = products.map((el, i) => <a key={i} style={{ borderColor: makeColorRGBA(products[productNumber].colors[1]), backgroundColor: productNumber === i ? makeColorRGBA(products[productNumber].colors[1]) : "transparent" }} href={`#${el.name}`}></a>);
 
 	if (products.length === 0) return <>Loading...</>;
-	// console.log(products[index].name)
-	console.log(lastIndex);
+
 	return (
 		<section className={style.productHolder} onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
 			{index !== 0 && (
@@ -84,14 +88,14 @@ const Product = (props) => {
 					<Link href={`#${products[index + 1].name}`}>
 						<a>
 							{products[index + 1].name}
-							<span classNamep="material-symbols-outlined">arrow_forward_ios</span>
+							<span className="material-symbols-outlined">arrow_forward_ios</span>
 						</a>
 					</Link>
 				</div>
 			)}
 			<section className={style.productImage}>
 				<div className={style.imageHolder}>
-					<img src={`./images/${product.image}`} alt={product.name} />
+					<img src={product.image} alt={product.name} />
 				</div>
 
 				<div className={style.slidersBtn}>{renderSliders}</div>
@@ -110,7 +114,7 @@ const Product = (props) => {
 					</div>
 				</div>
 				<div className={style.description}>
-					<p>{product.smallDescription}</p>
+					<p>{product.description}</p>
 				</div>
 				<div className={style.buyInfo}>
 					<div className={style.totalPrice}>
@@ -122,7 +126,7 @@ const Product = (props) => {
 						<span className="material-symbols-outlined">shopping_basket</span>
 					</button>
 				</div>
-				<div className="backBG" style={{ backgroundColor: product.colors[0] }}></div>
+				<div className="backBG" style={{ backgroundColor: makeColorRGBA(product.colors[0]) }}></div>
 			</section>
 		</section>
 	);
