@@ -42,7 +42,7 @@ const Header = () => {
 					<nav className={`${openMenu ? "active" : ""}`}>
 						<div className="header">
 							<button onClick={() => setOpenMenu(false)}>
-								Zatvori <span class="material-symbols-outlined">close</span>
+								Zatvori <span className="material-symbols-outlined">close</span>
 							</button>
 						</div>
 

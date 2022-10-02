@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { Router, useRouter } from "next/router";
+import { useRouter } from "next/router";
 import { RgbaColorPicker } from "react-colorful";
 import { useSnackbar } from "notistack";
 
