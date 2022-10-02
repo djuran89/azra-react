@@ -10,7 +10,7 @@ export default function Login() {
 
 	React.useEffect(() => {
 		axios
-			.post(`${process.env.APIURL}api/user/islogin`)
+			.post(`/api/user/islogin`)
 			.then((res) => res && Router.push("/admin"))
 			.catch((err) => console.log(err));
 	}, []);
