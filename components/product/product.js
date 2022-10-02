@@ -7,15 +7,11 @@ import { ordersAction } from "../../redux/action";
 import style from "./Product.module.scss";
 
 const Product = (props) => {
-	const { product, products, pageNumber } = props;
+	const { product, products } = props;
 	const dispatch = useDispatch();
 	const { enqueueSnackbar } = useSnackbar();
 	const [orders, setOrders, addOrderQuantity] = [useSelector((state) => state.orders), (state) => dispatch(ordersAction.setOrder(state)), (state) => dispatch(ordersAction.addQuantity(state))];
 	const [quantity, setQuantity] = React.useState(1);
-	const [toucheStart, setToucheStart] = React.useState([0, 0]);
-	const [toucheMove, setToucheMove] = React.useState([0, 0]);
-	const [scrollTop, setScrollTop] = React.useState(0);
-	const screenHeight = document.documentElement.clientHeight;
 	const productNumber = products.map((el) => el._id).indexOf(product._id);
 
 	const makeColorRGBA = (color) => {
@@ -36,34 +32,8 @@ const Product = (props) => {
 			addOrderQuantity({ ...product, quantity: quantity + orders[index].quantity });
 		}
 	};
-	const scrollTo = (top) => window.scrollTo({ top: top, behavior: "smooth" });
-	const swipeUp = () => {
-		const scroll = scrollTop - screenHeight;
-		if (scroll >= 0) {
-			setScrollTop(scroll);
-			scrollTo(scroll);
-		}
-	};
-	const swipeDown = () => {
-		const scroll = scrollTop + screenHeight;
-		if (document.body.clientHeight >= scroll) {
-			setScrollTop(scroll);
-			scrollTo(scroll);
-		}
-	};
 
-	const onTouchStart = (e) => setToucheStart([e.touches[0].clientX, e.touches[0].clientY]);
-	const onTouchMove = (e) => setToucheMove([e.touches[0].clientX, e.touches[0].clientY]);
-	const onTouchEnd = () => {
-		const limitMove = 20;
-		// toucheStart[0] - toucheMove[0] > limitMove && swipeLeft();
-		// toucheStart[0] - toucheMove[0] < -limitMove && swipeRight();
-		// toucheStart[1] - toucheMove[1] > limitMove && swipeDown();
-		// toucheStart[1] - toucheMove[1] < -limitMove && swipeUp();
-	};
 
-	//   return <>PROD</>;
-	// onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}
 	const index = products.map((el) => el._id).indexOf(product._id);
 	const lastIndex = products.length;
 	const renderSliders = products.map((el, i) => <a key={i} style={{ borderColor: makeColorRGBA(products[productNumber].colors[1]), backgroundColor: productNumber === i ? makeColorRGBA(products[productNumber].colors[1]) : "transparent" }} href={`#${el.name}`}></a>);
@@ -71,7 +41,7 @@ const Product = (props) => {
 	if (products.length === 0) return <>Loading...</>;
 
 	return (
-		<section className={style.productHolder} onTouchStart={onTouchStart} onTouchMove={onTouchMove} onTouchEnd={onTouchEnd}>
+		<section className={style.productHolder}>
 			{index !== 0 && (
 				<div id="left-slide">
 					<Link href={`#${products[index - 1].name}`}>

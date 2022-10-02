@@ -11,7 +11,7 @@ import "../styles/globals-mobile.scss";
 import "../styles/loading.scss";
 import "../styles/Admin/style.scss";
 // AXIOS CONFIG
-axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "http://192.168.0.23:4000" : "http://18.185.113.237:4000";
+axios.defaults.baseURL = process.env.NODE_ENV === "development" ? "http://192.168.0.49:4000" : "http://18.185.113.237:4000";
 axios.defaults.headers.post["Content-Type"] = "application/json";
 axios.defaults.withCredentials = true;
 axios.interceptors.response.use(
@@ -48,6 +48,7 @@ function MyApp({ Component, pageProps }) {
 				<SnackbarProvider
 					ref={notistackRef}
 					maxSnack={1}
+					autoHideDuration={1500}
 					classes="hotification"
 					anchorOrigin={{ vertical: "top", horizontal: "left" }}
 					action={(key) => (

@@ -14,6 +14,7 @@
 	flex-direction: column;
 	align-items: center;
 	justify-content: center;
+	width: 680px;
 }
 .productInfo {
 	display: flex;
@@ -171,6 +172,7 @@
 @media only screen and (max-width: 600px) {
 	.productHolder {
 		flex-direction: column;
+		width: 100%;
 	}
 	.productHolder section {
 		height: calc(var(--vh, 1vh) * 100);
@@ -216,6 +218,9 @@
 	.slides > div {
 		align-items: flex-start;
 	}
+	.productImage {
+		
+	}
 	.productHolder {
 		section:nth-child(1) {
 			padding-top: 0px;
@@ -243,6 +248,9 @@
 	}
 }
 @media screen and (min-width: 1290px) {
+	.productImage {
+		// background-color: red;
+	}
 	.productHolder {
 		section:nth-child(1) {
 			width: 960px;

@@ -22,7 +22,7 @@ const MobileHeader = () => {
 				<div className="center" style={{justifyContent: 'center', marginRight: 0}}>
 					<h1>
 						<Link href="/">
-							<img className="logo" src="./logo.png" alt="Pilja" />
+							<img className="logo" src="/logo.png" alt="Pilja" />
 						</Link>
 					</h1>
 				</div>

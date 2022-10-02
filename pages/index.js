@@ -27,30 +27,12 @@ const Home = ({ ...props }) => {
 		setCategories([...new Set(products.map((el) => el.category))]);
 	}, [products]);
 
-	// const productsRender = products.map((el) => (
-	// 	<section className={styles.article} key={el._id}>
-	// 		<Link className="image" href={`proizvod#${el.name}`}>
-	// 			<a>
-	// 				<h2>{el.name}</h2>
-	// 				<figure>
-	// 					<img src={`${el.image}`} alt={`${el.name}`} />
-	// 				</figure>
-	// 				<div className={styles.description}>{el.description}</div>
-	// 				<div className={styles.infoProduct}>
-	// 					<div className={styles.priceText}>Cena</div>
-	// 					<div className={styles.price}>{el.price},00 RSD</div>
-	// 				</div>
-	// 			</a>
-	// 		</Link>
-	// 	</section>
-	// ));
-
 	const productsRender = categories.map((category) => {
 		const product = products.filter(el => el.category === category)[0];
 		
 		return (
 			<section className={styles.article} key={product._id}>
-				<Link className="image" href={`proizvod#${product.name}`}>
+				<Link className="image" href={`proizvod/${category}/#${product.name}`}>
 					<a>
 						<h2>{category}</h2>
 						<figure>
