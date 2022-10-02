@@ -1,11 +1,10 @@
 import Link from "next/link";
 import React from "react";
-import { useSnackbar } from "notistack";
 import axios from "axios";
 import DataTable from "react-data-table-component";
 
 import Header from "./../../../components/admin/header";
-import columns from "./columns/productsColumes";
+import columns from "./../../../components/admin/columns/productsColumes";
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
 	<div className="data-table-search">
