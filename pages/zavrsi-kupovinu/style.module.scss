@@ -10,7 +10,7 @@ $singleOrderHeight: 76px;
 }
 
 .order {
-	background-color: #f9f9f9;
+	background-color: #fff;
 	overflow: hidden;
 	transition: all 300ms ease-in-out;
 }
@@ -23,7 +23,7 @@ $singleOrderHeight: 76px;
 	justify-content: space-between;
 	align-items: center;
 	height: 56px;
-	background-color: #f9f9f9;
+	background-color: #fff;
 	border-bottom: 1px solid $borderColor;
 	padding: 0 15px;
 	.title {
@@ -93,9 +93,8 @@ $singleOrderHeight: 76px;
 	}
 }
 .userInformation {
-	background-color: #fff;
 	height: 100vh;
-	margin: 0px 15px;
+	padding: 0px 15px;
 	h3 {
 		font-size: 16px;
 		margin: 16px 0 16px 0;
@@ -170,6 +169,45 @@ $singleOrderHeight: 76px;
 		}
 	}
 }
+.finishOrder {
+	background-color: #fff;
+	border-right: 1px solid $borderSecoundColor;
+	border-left: 1px solid $borderSecoundColor;
+	border-bottom: 1px solid $borderSecoundColor;
+	padding-bottom: 25px;
+}
+.selectButton {
+	button {
+		background-color: $seciondMainColor;
+		height: 42px;
+		width: 50%;
+		border-radius: 0px;
+		border: 0px;
+		outline: 0px;
+		font-size: 0.8rem;
+		color: #333;
+		border-bottom: 1px solid $borderSecoundColor;
+		border-top: 1px solid #fff;
+	}
+	button:nth-child(1){
+		border-right: 1px solid $borderSecoundColor;
+	}
+	.active {
+		background-color: #fff;
+		border-top: 2px solid #333;
+		border-bottom-color: transparent;
+
+	}
+}
+.registration {
+	display: flex;
+	justify-content: center;
+	padding-top: 16px;
+	a {
+		color: $linkColor;
+		margin-left: 8px;
+	}
+}
 .form.active {
 	input {
 		border: 2px solid $mainColor;
@@ -192,6 +230,7 @@ $singleOrderHeight: 76px;
 		width: auto;
 		margin: 1.25rem auto;
 		margin-top: 0px;
+		margin-bottom: 0px;
 		.maintTitle {
 			width: 50%;
 			height: auto;
@@ -206,6 +245,7 @@ $singleOrderHeight: 76px;
 			.userInformation {
 				width: 90%;
 				height: auto;
+				margin: auto;
 			}
 		}
 	}
