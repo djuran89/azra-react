@@ -30,6 +30,10 @@ function MyApp({ Component, pageProps }) {
 
 	React.useEffect(() => {
 		let vh = window.innerHeight * 0.01;
+		const footer = document.getElementsByTagName('footer');
+		const footerHeight = footer.length !== 0 ? footer[0].offsetHeight : 0;
+		document.documentElement.style.setProperty("--fh", `${footerHeight}px`);
+
 		document.documentElement.style.setProperty("--vh", `${vh}px`);
 		setIsMobile(Boolean(navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i)));
 	}, []);

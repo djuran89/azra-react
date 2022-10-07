@@ -24,7 +24,6 @@ button {
 	margin: 0;
 	padding: 0;
 }
-
 header {
 	background-color: #fff;
 	display: flex;
@@ -277,7 +276,7 @@ label.active {
 }
 @media only screen and (max-width: 600px) {
 	header {
-		.left{
+		.left {
 			display: flex;
 			align-items: center;
 		}
@@ -300,7 +299,6 @@ label.active {
 			.line-2 {
 				width: 50%;
 			}
-			
 		}
 		nav {
 			display: flex;
