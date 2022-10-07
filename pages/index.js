@@ -8,6 +8,7 @@ import styles from "./../styles/Home.module.scss";
 import Slider from "./../components/slider/slider";
 import Header from "./../components/header/header";
 import Loading from "./../components/loading/loading";
+import Footer from '../components/footer/footer';
 
 const Home = ({ ...props }) => {
 	const dispatch = useDispatch();
@@ -56,6 +57,7 @@ const Home = ({ ...props }) => {
 			<main className="content">
 				<section className={styles.products}>{productsRender}</section>
 			</main>
+			<Footer />
 		</>
 	);
 };

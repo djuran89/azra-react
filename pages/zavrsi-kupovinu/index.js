@@ -9,27 +9,31 @@ import { ordersAction } from "../../redux/action";
 
 import Header from "./../../components/header/header";
 
-const infoObject = { Ime: "", Prezime: "", Adresa: "", PostanskiBroj: "", Grad: "", Opciono: "", Drzava: "Srbija", Telefon: "", Email: "" };
-
+const infoObject = { Ime: "", Prezime: "", Adresa: "", PostanskiBroj: "", Grad: "", Opciono: "", Drzava: "Srbija", Telefon: "", Email: "", Napomena: "" };
 const FinishOrder = (props) => {
-	const { isMobile, setPageTitle } = props;
+	const { isMobile } = props;
 	const dispatch = useDispatch();
 	const { enqueueSnackbar } = useSnackbar();
 	const [orders, setOrders] = [useSelector((state) => state.orders), (state) => dispatch(ordersAction.setOrder(state))];
 	const [hideOrders, sethideOrders] = React.useState(true);
 	const [info, setInfo] = React.useState(infoObject);
-	const inputs = React.createRef();
 	const [textFinishOrder, setTextFinishOrder] = React.useState("Prikaži vašu poručbinu");
 
 	React.useState(() => {
 		!isMobile && setTextFinishOrder("Vaša poručbinu");
 		!isMobile && sethideOrders(false);
-		setPageTitle('Pilja Početna')
 	}, []);
 
 	React.useEffect(() => {
 		for (const input of document.getElementsByTagName("input")) {
 			input.addEventListener("blur", function () {
+				const lable = this.parentElement.getElementsByTagName("label")[0];
+				this.value !== "" ? this.classList.add("active") : this.classList.remove("active");
+				this.value !== "" ? lable.classList.add("active") : lable.classList.remove("active");
+			});
+		}
+		for (const textarea of document.getElementsByTagName("textarea")) {
+			textarea.addEventListener("blur", function () {
 				const lable = this.parentElement.getElementsByTagName("label")[0];
 				this.value !== "" ? this.classList.add("active") : this.classList.remove("active");
 				this.value !== "" ? lable.classList.add("active") : lable.classList.remove("active");
@@ -60,7 +64,7 @@ const FinishOrder = (props) => {
 				setInfo(infoObject);
 				setOrders([]);
 				enqueueSnackbar("Poručbina je prihvaćena. Hvala.", { variant: "success" });
-				Router.push("/")
+				Router.push("/");
 			})
 			.catch((err) => enqueueSnackbar(err.message, { variant: "error" }));
 	};
@@ -119,12 +123,12 @@ const FinishOrder = (props) => {
 							<h3>Adresa za isporuku </h3>
 
 							<div className={`${`${style.form} form-group`} form-group`}>
-								<input id="firstname" ref={inputs} className={style.formInput} name="name" type="text" value={info.Ime} onChange={(e) => setInfo({ ...info, Ime: e.target.value })} />
+								<input id="firstname" className={style.formInput} name="name" type="text" value={info.Ime} onChange={(e) => setInfo({ ...info, Ime: e.target.value })} />
 								<label htmlFor="firstname">Ime</label>
 							</div>
 
 							<div className={`${style.form} form-group`}>
-								<input id="lastname" ref={inputs} className={style.formInput} name="lastname" type="text" value={info.Prezime} onChange={(e) => setInfo({ ...info, Prezime: e.target.value })} />
+								<input id="lastname" className={style.formInput} name="lastname" type="text" value={info.Prezime} onChange={(e) => setInfo({ ...info, Prezime: e.target.value })} />
 								<label htmlFor="lastname">Prezime</label>
 							</div>
 
@@ -163,6 +167,11 @@ const FinishOrder = (props) => {
 							<div className={`${style.form} form-group`}>
 								<input id="email" className={style.formInput} name="email" type="text" value={info.Email} onChange={(e) => setInfo({ ...info, Email: e.target.value })} />
 								<label htmlFor="email">Email</label>
+							</div>
+
+							<div className={`${style.form} form-group`}>
+								<textarea rows={5} id="napomena" className={style.formInput} name="napomena" type="text" value={info.Napomena} onChange={(e) => setInfo({ ...info, Napomena: e.target.value })} />
+								<label htmlFor="napomena">Napomena</label>
 							</div>
 
 							<div className={`${style.form} form-group`}>

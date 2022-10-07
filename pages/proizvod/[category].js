@@ -8,6 +8,7 @@ import SingleProduct from "./../../components/product/product";
 import MobileHeader from "./../../components/header/mobileHeader";
 import Header from "./../../components/header/header";
 import Loading from "./../../components/loading/loading";
+import style from "./Product.module.scss";
 
 const Product = ({ ...props }) => {
 	const dispatch = useDispatch();
@@ -45,7 +46,7 @@ const Product = ({ ...props }) => {
 	return (
 		<>
 			{isMobile ? <MobileHeader /> : <Header />}
-			<div id="slider" className="slider">
+			<div id="slider" className={`slider `}>
 				<div className="slides">{renderPorudcts}</div>
 			</div>
 		</>

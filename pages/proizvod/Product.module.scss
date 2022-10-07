@@ -1,7 +1,14 @@
-@import "./../../../styles/varibles.scss";
+@import "./../../styles/varibles.scss";
 .productHolder {
 	display: flex;
 	flex-direction: row;
+}
+.viewer {
+	transform: scale(1);
+	transition: all 500ms ease-in-out;
+}
+.viewer.active {
+	transform: scale(0);
 }
 .productImage {
 	display: flex;

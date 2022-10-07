@@ -45,18 +45,7 @@ function MyApp({ Component, pageProps }) {
 				<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 			</Head>
 			<Provider store={store}>
-				<SnackbarProvider
-					ref={notistackRef}
-					maxSnack={1}
-					autoHideDuration={1500}
-					classes="hotification"
-					anchorOrigin={{ vertical: "top", horizontal: "left" }}
-					action={(key) => (
-						<div onClick={() => notistackRef.current.closeSnackbar(key)} style={{ color: "#fff", fontSize: "20px", opacity: "1" }}>
-							✖
-						</div>
-					)}
-				>
+				<SnackbarProvider ref={notistackRef} maxSnack={1} autoHideDuration={1500} classes="hotification" anchorOrigin={{ vertical: "top", horizontal: "left" }}>
 					<Component {...pageProps} setPageTitle={setPageTitle} httpErrorHandler={httpErrorHandler} isMobile={isMobile} />
 				</SnackbarProvider>
 			</Provider>
