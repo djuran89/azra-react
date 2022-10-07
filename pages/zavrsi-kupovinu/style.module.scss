@@ -10,7 +10,7 @@ $singleOrderHeight: 76px;
 }
 
 .order {
-	background-color: #fff;
+	background-color: $seciondMainColor;
 	overflow: hidden;
 	transition: all 300ms ease-in-out;
 }
@@ -23,7 +23,7 @@ $singleOrderHeight: 76px;
 	justify-content: space-between;
 	align-items: center;
 	height: 56px;
-	background-color: #fff;
+	background-color: $seciondMainColor;
 	border-bottom: 1px solid $borderColor;
 	padding: 0 15px;
 	.title {
@@ -44,6 +44,7 @@ $singleOrderHeight: 76px;
 	border-bottom: 1px solid $borderColor;
 	font-size: 15px;
 	.imgHolder {
+		background-color: #fff;
 		position: relative;
 		display: flex;
 		margin: 15px;
@@ -238,7 +239,7 @@ $singleOrderHeight: 76px;
 		.showOrder,
 		.order {
 			border-right: 1px solid $borderColor;
-			border-left: 1px solid $borderColor;
+			// border-left: 1px solid $borderColor;
 		}
 		.finishOrder {
 			width: 50%;

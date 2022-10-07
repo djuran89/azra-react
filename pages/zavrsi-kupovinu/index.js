@@ -1,21 +1,17 @@
 import React from "react";
-// import axios from "axios";
-// import Router from "next/router";
 import { useSelector, useDispatch } from "react-redux";
-import { useSnackbar } from "notistack";
 
 import style from "./style.module.scss";
 import { ordersAction } from "../../redux/action";
 
 import Header from "./../../components/header/header";
+import Footer from './../../components/footer/footer'
 import FizickaLica from "../../components/zavrsi-kupovinu/fizickaLica";
 import PravnaLica from "../../components/zavrsi-kupovinu/pravnaLica";
 
-// const infoObject = { Ime: "", Prezime: "", Adresa: "", PostanskiBroj: "", Grad: "", Opciono: "", Drzava: "Srbija", Telefon: "", Email: "", Napomena: "" };
 const FinishOrder = (props) => {
 	const { isMobile } = props;
 	const dispatch = useDispatch();
-	// const { enqueueSnackbar } = useSnackbar();
 	const [orders, setOrders] = [useSelector((state) => state.orders), (state) => dispatch(ordersAction.setOrder(state))];
 	const [hideOrders, sethideOrders] = React.useState(true);
 	const [textFinishOrder, setTextFinishOrder] = React.useState("Prikaži vašu poručbinu");
@@ -26,22 +22,6 @@ const FinishOrder = (props) => {
 		!isMobile && sethideOrders(false);
 	}, []);
 
-	// React.useEffect(() => {
-	// 	for (const input of document.getElementsByTagName("input")) {
-	// 		input.addEventListener("blur", function () {
-	// 			const lable = this.parentElement.getElementsByTagName("label")[0];
-	// 			this.value !== "" ? this.classList.add("active") : this.classList.remove("active");
-	// 			this.value !== "" ? lable.classList.add("active") : lable.classList.remove("active");
-	// 		});
-	// 	}
-	// 	for (const textarea of document.getElementsByTagName("textarea")) {
-	// 		textarea.addEventListener("blur", function () {
-	// 			const lable = this.parentElement.getElementsByTagName("label")[0];
-	// 			this.value !== "" ? this.classList.add("active") : this.classList.remove("active");
-	// 			this.value !== "" ? lable.classList.add("active") : lable.classList.remove("active");
-	// 		});
-	// 	}
-	// }, []);
 
 	const hideOrdersInfo = () => {
 		isMobile && orders.length > 0 && sethideOrders(!hideOrders);
