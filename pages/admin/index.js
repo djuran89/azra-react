@@ -62,7 +62,7 @@ export default function Admin() {
 
 	React.useEffect(() => {
 		axios
-			.get(`${process.env.APIURL}/api/order`)
+			.get(`/api/order`)
 			.then((res) => setData(res))
 			.catch((err) => enqueueSnackbar(err.message, { variant: "error" }));
 	}, []);
