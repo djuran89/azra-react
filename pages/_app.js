@@ -17,12 +17,14 @@ axios.defaults.withCredentials = true;
 axios.interceptors.response.use(
 	(res) => res.data,
 	(err) => {
+		const status = err.response?.status;
 		const error = err.response?.data || "Something wrong with server.";
-		throw new Error(error);
+		throw new Error(error.replace("Error","Greška"));
 	}
 );
 
 const httpErrorHandler = (msg, type) => console.error(msg);
+const btnLoading = `<span id="loading"><span class="material-symbols-outlined">cached</span> Obradjuje se...</span>`;
 function MyApp({ Component, pageProps }) {
 	const [pageTitle, setPageTitle] = React.useState("Home");
 	const [isMobile, setIsMobile] = React.useState(false);
@@ -30,7 +32,7 @@ function MyApp({ Component, pageProps }) {
 
 	React.useEffect(() => {
 		let vh = window.innerHeight * 0.01;
-		const footer = document.getElementsByTagName('footer');
+		const footer = document.getElementsByTagName("footer");
 		const footerHeight = footer.length !== 0 ? footer[0].offsetHeight : 0;
 		document.documentElement.style.setProperty("--fh", `${footerHeight}px`);
 
@@ -49,8 +51,8 @@ function MyApp({ Component, pageProps }) {
 				<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
 			</Head>
 			<Provider store={store}>
-				<SnackbarProvider ref={notistackRef} maxSnack={1} autoHideDuration={1500} classes="hotification" anchorOrigin={{ vertical: "top", horizontal: "left" }}>
-					<Component {...pageProps} setPageTitle={setPageTitle} httpErrorHandler={httpErrorHandler} isMobile={isMobile} />
+				<SnackbarProvider ref={notistackRef} maxSnack={1} autoHideDuration={2000} classes="hotification" anchorOrigin={{ vertical: "top", horizontal: "left" }}>
+					<Component {...pageProps} setPageTitle={setPageTitle} httpErrorHandler={httpErrorHandler} btnLoading={btnLoading} isMobile={isMobile} />
 				</SnackbarProvider>
 			</Provider>
 		</>

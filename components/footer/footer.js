@@ -9,8 +9,8 @@ export default function Footer() {
 	const renderLinks = categories.map((category, i) => {
 		const prod = products.filter((product) => product.category === category)[0];
 		return (
-			<li>
-				<Link key={i} href={`/proizvod/${category}#${prod.name}`}>
+			<li key={i}>
+				<Link href={`/proizvod/${category}#${prod.name}`}>
 					<a className="link">{category}</a>
 				</Link>
 			</li>

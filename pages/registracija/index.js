@@ -1,11 +1,23 @@
 import React from "react";
+import axios from "axios";
+import Router from "next/router";
+import { useSnackbar } from "notistack";
+
+import { useSelector, useDispatch } from "react-redux";
+import { userAction } from "../../redux/action";
 
 import Header from "./../../components/header/header";
 import style from "./../../pages/zavrsi-kupovinu/style.module.scss";
 import newStyle from "./style.module.scss";
 
+const btnLoading = `<span id="loading"><span class="material-symbols-outlined">cached</span> Obradjuje se...</span>`;
 export default function Registracija() {
+	const button = React.useRef();
+	const dispatch = useDispatch();
+	const { enqueueSnackbar } = useSnackbar();
 	const [info, setInfo] = React.useState({});
+	const [btnContent, setBtnContent] = React.useState("");
+	const [user, setUser] = [useSelector((state) => state.user), (state) => dispatch(userAction.setUser(state))];
 
 	React.useEffect(() => {
 		for (const input of document.getElementsByTagName("input")) {
@@ -15,13 +27,42 @@ export default function Registracija() {
 				this.value !== "" ? lable.classList.add("active") : lable.classList.remove("active");
 			});
 		}
+		setBtnContent(button.current.innerHTML);
 	}, []);
+
+	React.useEffect(() => {
+		!user &&
+			axios
+				.get("/api/company")
+				.then((res) => setUser(res))
+				.catch((err) => console.error(err));
+	}, []);
+
+	React.useEffect(() => {
+		user && Router.push("/zavrsi-kupovinu");
+	}, [user]);
+
+	const disableBtn = () => ((button.current.disabled = true), (button.current.innerHTML = btnLoading));
+	const enableBtn = () => ((button.current.disabled = false), (button.current.innerHTML = btnContent));
+
+	const onSubmitForm = async (e) => {
+		e.preventDefault();
+		disableBtn();
+
+		axios
+			.post(`/api/company`, info)
+			.then((res) => {
+				Router.push("/zavrsi-kupovinu")
+				enableBtn();
+			})
+			.catch((err) => (enableBtn(), enqueueSnackbar(err.message, { variant: "error" })));
+	};
 
 	return (
 		<>
 			<Header />
 			<div className={`${style.userInformation} ${newStyle.container}`}>
-				<form>
+				<form onSubmit={onSubmitForm}>
 					<h3>Registracija</h3>
 
 					<div className={`${`${style.form} form-group`} form-group`}>
@@ -60,7 +101,9 @@ export default function Registracija() {
 					</div>
 
 					<div className={`${style.form} form-group`}>
-						<button type="submit">Registracija</button>
+						<button type="submit" ref={button}>
+							Registracija
+						</button>
 					</div>
 				</form>
 			</div>

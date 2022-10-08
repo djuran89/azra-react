@@ -36,3 +36,13 @@ export const productsSlice = createSlice({
 	},
 });
 export const productsAction = productsSlice.actions;
+
+// User
+export const userSlice = createSlice({
+	name: "user",
+	initialState: null,
+	reducers: {
+		setUser: (state, action) => (state = action.payload),
+	},
+});
+export const userAction = userSlice.actions;

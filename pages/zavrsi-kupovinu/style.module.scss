@@ -97,6 +97,9 @@ $singleOrderHeight: 76px;
 	height: 100vh;
 	padding: 0px 15px;
 	h3 {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
 		font-size: 16px;
 		margin: 16px 0 16px 0;
 		font-weight: 500;
@@ -168,7 +171,24 @@ $singleOrderHeight: 76px;
 			font-weight: 300;
 			border-radius: 8px;
 		}
+		button:disabled,
+		button[disabled] {
+			border: 1px solid #999999;
+			background-color: #666;
+			color: #fff;
+		}
 	}
+}
+.btnLogout {
+	background-color: $mainColor;
+	padding: 0px 16px;
+	height: 32px;
+	border: 1px solid #38006b;
+	border-bottom: 2px solid #38006b;
+	color: #fff;
+	font-size: 14px;
+	font-weight: 300;
+	border-radius: 0px;
 }
 .finishOrder {
 	background-color: #fff;
@@ -190,14 +210,13 @@ $singleOrderHeight: 76px;
 		border-bottom: 1px solid $borderSecoundColor;
 		border-top: 1px solid #fff;
 	}
-	button:nth-child(1){
+	button:nth-child(1) {
 		border-right: 1px solid $borderSecoundColor;
 	}
 	.active {
 		background-color: #fff;
 		border-top: 2px solid #333;
 		border-bottom-color: transparent;
-
 	}
 }
 .registration {

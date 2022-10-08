@@ -1,33 +1,85 @@
 import React from "react";
+import axios from "axios";
+import { useSnackbar } from "notistack";
 import { useSelector, useDispatch } from "react-redux";
 
 import style from "./style.module.scss";
-import { ordersAction } from "../../redux/action";
+import { ordersAction, userAction } from "../../redux/action";
 
 import Header from "./../../components/header/header";
-import Footer from './../../components/footer/footer'
+import Footer from "./../../components/footer/footer";
 import FizickaLica from "../../components/zavrsi-kupovinu/fizickaLica";
 import PravnaLica from "../../components/zavrsi-kupovinu/pravnaLica";
+import CompanyRender from "../../components/zavrsi-kupovinu/companyRender";
 
 const FinishOrder = (props) => {
-	const { isMobile } = props;
+	const { isMobile, btnLoading } = props;
 	const dispatch = useDispatch();
+	const { enqueueSnackbar } = useSnackbar();
 	const [orders, setOrders] = [useSelector((state) => state.orders), (state) => dispatch(ordersAction.setOrder(state))];
 	const [hideOrders, sethideOrders] = React.useState(true);
 	const [textFinishOrder, setTextFinishOrder] = React.useState("Prikaži vašu poručbinu");
 	const [isFizickaLica, setIsFizickaLica] = React.useState(true);
+	const [isLogin, setIsLogin] = React.useState(false);
+	const [user, setUser] = [useSelector((state) => state.user), (state) => dispatch(userAction.setUser(state))];
+
+	React.useEffect(() => {
+		for (const input of document.getElementsByTagName("input")) {
+			input.addEventListener("blur", function () {
+				const lable = this.parentElement.getElementsByTagName("label")[0];
+				this.value !== "" ? this.classList.add("active") : this.classList.remove("active");
+				this.value !== "" ? lable.classList.add("active") : lable.classList.remove("active");
+			});
+		}
+		for (const textarea of document.getElementsByTagName("textarea")) {
+			textarea.addEventListener("blur", function () {
+				const lable = this.parentElement.getElementsByTagName("label")[0];
+				this.value !== "" ? this.classList.add("active") : this.classList.remove("active");
+				this.value !== "" ? lable.classList.add("active") : lable.classList.remove("active");
+			});
+		}
+		for (const input of document.getElementsByTagName("input")) {
+			const lable = input.parentElement.getElementsByTagName("label")[0];
+			lable.value !== "" ? lable.classList.add("active") : this.classList.remove("active");
+			lable.value !== "" ? lable.classList.add("active") : lable.classList.remove("active");
+		}
+		for (const textarea of document.getElementsByTagName("textarea")) {
+			const lable = textarea.parentElement.getElementsByTagName("label")[0];
+			textarea.value !== "" ? textarea.classList.add("active") : textarea.classList.remove("active");
+			textarea.value !== "" ? lable.classList.add("active") : lable.classList.remove("active");
+		}
+	}, []);
 
 	React.useState(() => {
 		!isMobile && setTextFinishOrder("Vaša poručbinu");
 		!isMobile && sethideOrders(false);
 	}, []);
 
+	React.useEffect(() => {
+		!user &&
+			axios
+				.get("/api/company")
+				.then((res) => res !== null && (setUser(res), setIsLogin(true)))
+				.catch((err) => console.error(err));
+	}, []);
+
+	React.useEffect(() => {
+		user === null ? setIsLogin(false) : setIsLogin(true);
+	}, [user]);
 
 	const hideOrdersInfo = () => {
 		isMobile && orders.length > 0 && sethideOrders(!hideOrders);
 		isMobile && (hideOrders ? setTextFinishOrder("Sakri vašu poručbinu") : setTextFinishOrder("Prikaži vašu poručbinu"));
 	};
 
+	const totalPrice = orders.length > 0 ? orders.map((el) => el.quantity * el.price).reduce((a, b) => a + b) : 0;
+	const renderTxt =
+		isMobile &&
+		(hideOrders ? (
+			<span className="material-symbols-outlined">keyboard_arrow_down</span>
+		) : (
+			<span className="material-symbols-outlined">keyboard_arrow_up</span>
+		));
 	const renderOrders = orders.map((el, i) => (
 		<section key={i} className={style.singleOrder}>
 			<div className={style.imgHolder}>
@@ -41,10 +93,6 @@ const FinishOrder = (props) => {
 		</section>
 	));
 
-	const renderTxt = isMobile && (hideOrders ? <span className="material-symbols-outlined">keyboard_arrow_down</span> : <span className="material-symbols-outlined">keyboard_arrow_up</span>);
-
-	const totalPrice = orders.length > 0 ? orders.map((el) => el.quantity * el.price).reduce((a, b) => a + b) : 0;
-
 	return (
 		<>
 			<Header />
@@ -55,7 +103,7 @@ const FinishOrder = (props) => {
 						<div className={style.title}>
 							<span className="material-symbols-outlined">shopping_bag</span>
 							<span>{textFinishOrder}</span>
-							<spna>{renderTxt}</spna>
+							<span>{renderTxt}</span>
 						</div>
 						<div className={style.totalPrice}>{totalPrice},00 RSD</div>
 					</section>
@@ -72,12 +120,24 @@ const FinishOrder = (props) => {
 				</div>
 
 				<div className={`${style.finishOrder}`}>
-					<section className={style.selectButton}>
-						<button onClick={() => setIsFizickaLica(true)} className={isFizickaLica ? style.active : ''}>Fizicka lica</button>
-						<button onClick={() => setIsFizickaLica(false)} className={!isFizickaLica ? style.active : ''}>Pravna lica</button>
-					</section>
+					{!isLogin && (
+						<section className={style.selectButton}>
+							<button onClick={() => setIsFizickaLica(true)} className={isFizickaLica ? style.active : ""}>
+								Fizicka lica
+							</button>
+							<button onClick={() => setIsFizickaLica(false)} className={!isFizickaLica ? style.active : ""}>
+								Pravna lica
+							</button>
+						</section>
+					)}
 
-					{isFizickaLica ? <FizickaLica /> : <PravnaLica />}
+					{isLogin ? (
+						<CompanyRender user={user} setUser={setUser} btnLoading={btnLoading} orders={orders} setOrders={setOrders} />
+					) : isFizickaLica ? (
+						<FizickaLica orders={orders} setOrders={setOrders} btnLoading={btnLoading} />
+					) : (
+						<PravnaLica user={user} setUser={setUser} btnLoading={btnLoading} />
+					)}
 				</div>
 			</div>
 		</>

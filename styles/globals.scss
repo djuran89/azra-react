@@ -24,6 +24,24 @@ button {
 	margin: 0;
 	padding: 0;
 }
+#loading {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	span {
+		margin-right: 15px;
+		transform: rotate(0deg);
+		animation: rotate 1s infinite;
+	}
+}
+@keyframes rotate {
+	from {
+		transform: rotate(0deg);
+	}
+	to {
+		transform: rotate(360deg);
+	}
+}
 header {
 	background-color: #fff;
 	display: flex;
