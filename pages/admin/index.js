@@ -31,6 +31,11 @@ export default function Admin() {
 			sortable: true,
 		},
 		{
+			name: "Napomena",
+			selector: (row) => `${row.Napomena ? row.Napomena : ""}`,
+			sortable: true,
+		},
+		{
 			name: "Datum",
 			selector: (row) => moment(row.createdAt).format("DD-MM-YYYY, hh:mm:ss"),
 			sortable: true,
