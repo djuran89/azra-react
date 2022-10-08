@@ -18,7 +18,7 @@ export default function Login() {
 	const onLogin = (e) => {
 		e.preventDefault();
 		axios
-			.post(`${process.env.APIURL}/api/user/admin/login`, { Username, Password })
+			.post(`/api/user/admin/login`, { Username, Password })
 			.then(() => Router.push("/admin"))
 			.catch((err) => enqueueSnackbar(err.message, { variant: "error" }));
 	};
