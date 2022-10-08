@@ -1,3 +1,5 @@
+import Link from "next/link";
+
 import Header from "./../../components/header/header";
 import Footer from "./../../components/footer/footer";
 
@@ -12,30 +14,36 @@ export default function Contact() {
 					<h1>Kontaktiraj pilju</h1>
 					<ul>
 						<li>
-							<a href="https://goo.gl/maps/SNp7uZPNaUCwVkCH8" target="_blank">
-								<div className={style.icon}>
-									<span className="material-symbols-outlined">home</span>
-									Kraljevica Marka 17, Novi Sad, Srbija
-								</div>
-							</a>
+							<Link href="https://goo.gl/maps/SNp7uZPNaUCwVkCH8">
+								<a>
+									<div className={style.icon}>
+										<span className="material-symbols-outlined">home</span>
+										Kraljevica Marka 17, Novi Sad, Srbija
+									</div>
+								</a>
+							</Link>
 						</li>
 
 						<li>
-							<a href="tel:+381658823275">
-								<div className={style.icon}>
-									<span className="material-symbols-outlined">call</span>
-									<div className={style.info}>0658823275</div>
-								</div>
-							</a>
+							<Link href="tel:+381658823275">
+								<a>
+									<div className={style.icon}>
+										<span className="material-symbols-outlined">call</span>
+										<div className={style.info}>0658823275</div>
+									</div>
+								</a>
+							</Link>
 						</li>
 
 						<li>
-							<a href="mailto:tvojapilja@gmail.com">
-								<div className={style.icon}>
-									<span className="material-symbols-outlined">mail</span>
-									<div className={style.info}>tvojapilja@gmail.com</div>
-								</div>
-							</a>
+							<Link href="mailto:tvojapilja@gmail.com">
+								<a>
+									<div className={style.icon}>
+										<span className="material-symbols-outlined">mail</span>
+										<div className={style.info}>tvojapilja@gmail.com</div>
+									</div>
+								</a>
+							</Link>
 						</li>
 
 						<li>
