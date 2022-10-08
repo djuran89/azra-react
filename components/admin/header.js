@@ -8,7 +8,7 @@ export default function Header() {
 	const onPrint = () => window.print();
 	const onLogout = () => {
 		axios
-			.post(`${process.env.APIURL}/api/user/logout`)
+			.post(`/api/user/logout`)
 			.then(() => Router.push("/admin/login"))
 			.catch((err) => enqueueSnackbar(err.message, { variant: "error" }));
 	};
