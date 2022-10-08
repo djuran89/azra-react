@@ -29,7 +29,7 @@ export default function Footer() {
 					<h1>Kontaktiraj pilju</h1>
 					<ul>
 						<li>
-							<a href="https://goo.gl/maps/SNp7uZPNaUCwVkCH8" target="_blank">
+							<a href="https://goo.gl/maps/SNp7uZPNaUCwVkCH8" rel="noreferrer" target="_blank">
 								<div className={style.icon}>
 									<span className="material-symbols-outlined">home</span>
 									Kraljevica Marka 17, Novi Sad, Srbija
