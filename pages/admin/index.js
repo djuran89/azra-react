@@ -69,7 +69,7 @@ export default function Admin() {
 
 	const onRemove = (Order) => {
 		axios
-			.delete(`${process.env.APIURL}/api/order`, { data: { Order } })
+			.delete(`/api/order`, { data: { Order } })
 			.then((res) => setData(res))
 			.catch((err) => enqueueSnackbar(err.message, { variant: "error" }));
 	};
