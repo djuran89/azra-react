@@ -33,6 +33,8 @@ const Product = (props) => {
 		}
 	};
 
+	const setQuantityValue = () => quantity*100 >= 1000 ? `${quantity*100/1000} kg` : `${quantity*100} g` 
+
 
 	const index = products.map((el) => el._id).indexOf(product._id);
 	const lastIndex = products.length;
@@ -77,7 +79,7 @@ const Product = (props) => {
 						<button className={style.remove} onClick={removeQuantity}>
 							<span className="material-symbols-outlined">remove</span>
 						</button>
-						<div>{quantity}</div>
+						<div>{setQuantityValue({quantity})}</div>
 						<button className={style.add} onClick={addQuantity}>
 							<span className="material-symbols-outlined">add</span>
 						</button>

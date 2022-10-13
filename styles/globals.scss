@@ -34,6 +34,13 @@ button {
 		animation: rotate 1s infinite;
 	}
 }
+#aboutUs {
+	display: flex;
+	justify-content: center;
+	#paperAboutUs {
+		width: 50%;
+	}
+}
 @keyframes rotate {
 	from {
 		transform: rotate(0deg);
@@ -293,6 +300,9 @@ label.active {
 	}
 }
 @media only screen and (max-width: 600px) {
+	#paperAboutUs {
+		width: 90%;
+	}
 	header {
 		.left {
 			display: flex;

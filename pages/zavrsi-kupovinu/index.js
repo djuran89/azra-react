@@ -140,6 +140,7 @@ const FinishOrder = (props) => {
 					)}
 				</div>
 			</div>
+
 		</>
 	);
 };
