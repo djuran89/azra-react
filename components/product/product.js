@@ -24,7 +24,7 @@ const Product = (props) => {
 	const addQuantity = () => setQuantity(++quantity);
 	const onCreateOrder = () => {
 		setQuantity(1);
-		enqueueSnackbar("Dodato u korpu.");
+		// enqueueSnackbar("Dodato u korpu.");
 		const index = orders.map((el) => el._id).indexOf(product._id);
 		if (index === -1) {
 			setOrders([...orders, { ...product, quantity }]);

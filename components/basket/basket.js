@@ -19,10 +19,12 @@ const Basket = (props) => {
 		helpOrder.length === 0 && setCloseCheckout();
 	};
 
+	const setQuantityValue = (q) => q*100 >= 1000 ? `${q*100/1000} kg` : `${q*100} g` 
+
 	const renderOrder = orders.map((el, i) => (
 		<div key={i} className={style.singleOrder}>
 			<div className={style.imgHolder}>
-				<div className={style.quantity}>{el.quantity}</div>
+				<div className={style.quantity}>{setQuantityValue(el.quantity)}</div>
 				<img src={el.image} alt={el.Name} />
 			</div>
 			<div className={style.nameProduct}>{el.name}</div>

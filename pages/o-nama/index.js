@@ -1,8 +1,8 @@
 import Header from "./../../components/header/header";
 import Footer from "./../../components/footer/footer";
-import Image from "next/image";
 
-export default function AboutUs() {
+export default function AboutUs(props) {
+	props.getPorducts();
 	return (
 		<>
 			<Header />

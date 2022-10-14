@@ -262,9 +262,6 @@
 	}
 }
 @media screen and (min-width: 1290px) {
-	.productImage {
-		// background-color: red;
-	}
 	.productHolder {
 		section:nth-child(1) {
 			width: 960px;
@@ -279,7 +276,6 @@
 				top: 50%;
 				left: 50%;
 				position: absolute;
-				// width: 140%;
 				height: 100%;
 				transform: translate(-50%, -50%);
 			}

@@ -7,15 +7,15 @@ import style from "./style.module.scss";
 import { ordersAction, userAction } from "../../redux/action";
 
 import Header from "./../../components/header/header";
-import Footer from "./../../components/footer/footer";
 import FizickaLica from "../../components/zavrsi-kupovinu/fizickaLica";
 import PravnaLica from "../../components/zavrsi-kupovinu/pravnaLica";
 import CompanyRender from "../../components/zavrsi-kupovinu/companyRender";
 
 const FinishOrder = (props) => {
+	props.getPorducts();
+
 	const { isMobile, btnLoading } = props;
 	const dispatch = useDispatch();
-	const { enqueueSnackbar } = useSnackbar();
 	const [orders, setOrders] = [useSelector((state) => state.orders), (state) => dispatch(ordersAction.setOrder(state))];
 	const [hideOrders, sethideOrders] = React.useState(true);
 	const [textFinishOrder, setTextFinishOrder] = React.useState("Prikaži vašu poručbinu");
@@ -72,6 +72,7 @@ const FinishOrder = (props) => {
 		isMobile && (hideOrders ? setTextFinishOrder("Sakri vašu poručbinu") : setTextFinishOrder("Prikaži vašu poručbinu"));
 	};
 
+	const setQuantityValue = (q) => (q * 100 >= 1000 ? `${(q * 100) / 1000} kg` : `${q * 100} g`);
 	const totalPrice = orders.length > 0 ? orders.map((el) => el.quantity * el.price).reduce((a, b) => a + b) : 0;
 	const renderTxt =
 		isMobile &&
@@ -83,7 +84,7 @@ const FinishOrder = (props) => {
 	const renderOrders = orders.map((el, i) => (
 		<section key={i} className={style.singleOrder}>
 			<div className={style.imgHolder}>
-				<div className={style.quantity}>{el.quantity}</div>
+				<div className={style.quantity}>{setQuantityValue(el.quantity)}</div>
 				<img src={el.image} alt={el.Name} />
 			</div>
 
@@ -140,7 +141,6 @@ const FinishOrder = (props) => {
 					)}
 				</div>
 			</div>
-
 		</>
 	);
 };

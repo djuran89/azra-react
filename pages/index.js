@@ -8,7 +8,7 @@ import styles from "./../styles/Home.module.scss";
 import Slider from "./../components/slider/slider";
 import Header from "./../components/header/header";
 import Loading from "./../components/loading/loading";
-import Footer from '../components/footer/footer';
+import Footer from "../components/footer/footer";
 
 const Home = ({ ...props }) => {
 	const dispatch = useDispatch();
@@ -29,8 +29,8 @@ const Home = ({ ...props }) => {
 	}, [products]);
 
 	const productsRender = categories.map((category) => {
-		const product = products.filter(el => el.category === category)[0];
-		
+		const product = products.filter((el) => el.category === category)[0];
+
 		return (
 			<section className={styles.article} key={product._id}>
 				<Link className="image" href={`proizvod/${category}/#${product.name}`}>
@@ -39,7 +39,7 @@ const Home = ({ ...props }) => {
 						<figure>
 							<img src={`${product.image}`} alt={`${product.name}`} />
 						</figure>
-						<div className={styles.description}>{product.description}</div>
+						{/* <div className={styles.description}>{product.description}</div>  */}
 					</a>
 				</Link>
 			</section>
@@ -51,10 +51,11 @@ const Home = ({ ...props }) => {
 		<>
 			<Header />
 			<Slider />
-			<section className={styles.title}>
-				<h2>Proizvodi</h2>
-			</section>
+
 			<main className="content">
+				<section className={styles.title}>
+					<h2>Proizvodi</h2>
+				</section>
 				<section className={styles.products}>{productsRender}</section>
 			</main>
 			<Footer />

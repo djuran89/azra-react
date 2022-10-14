@@ -11,7 +11,9 @@ import style from "./../../pages/zavrsi-kupovinu/style.module.scss";
 import newStyle from "./style.module.scss";
 
 const btnLoading = `<span id="loading"><span class="material-symbols-outlined">cached</span> Obradjuje se...</span>`;
-export default function Registracija() {
+export default function Registracija(props) {
+	props.getPorducts();
+	
 	const button = React.useRef();
 	const dispatch = useDispatch();
 	const { enqueueSnackbar } = useSnackbar();

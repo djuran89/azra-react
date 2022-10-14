@@ -5,7 +5,8 @@ import Footer from "./../../components/footer/footer";
 
 import style from "./style.module.scss";
 
-export default function Contact() {
+export default function Contact(props) {
+	props.getPorducts();
 	return (
 		<>
 			<Header />
