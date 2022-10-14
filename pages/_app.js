@@ -25,7 +25,7 @@ axios.interceptors.response.use(
 		throw new Error(error.replace("Error", "Greška"));
 	}
 );
-const getPorducts = async () => {
+const GetPorducts = async () => {
 	const [products, setProducts] = [useSelector((state) => state.products), (state) => dispatch(productsAction.setProducts(state))];
 	const dispatch = useDispatch();
 	try {
@@ -82,7 +82,7 @@ function MyApp({ Component, pageProps }) {
 					<Component
 						{...pageProps}
 						setPageTitle={setPageTitle}
-						getPorducts={getPorducts}
+						getPorducts={GetPorducts}
 						httpErrorHandler={httpErrorHandler}
 						btnLoading={btnLoading}
 						isMobile={isMobile}
