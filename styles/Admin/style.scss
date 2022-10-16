@@ -130,6 +130,21 @@ input[type="file"] {
 		font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 48;
 	}
 }
+.btn-active {
+	padding: 0;
+	background-color: transparent;
+	cursor: pointer;
+	span {
+		font-size: 32px;
+		font-variation-settings: "FILL" 0, "wght" 600, "GRAD" 0, "opsz" 48;
+	}
+}
+.btn-active.active {
+	color: green;
+}
+.btn-active.inactive {
+	color: red;
+}
 #clear {
 	display: flex;
 	justify-content: center;

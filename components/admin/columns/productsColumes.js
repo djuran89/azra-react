@@ -2,15 +2,14 @@ import Router from "next/router";
 
 const columns = [
 	{
-		name: "Izmeni",
+		name: "Activno",
 		selector: (row) => (
-			<button className="btn btn-edit" onClick={() => Router.push(`./proizvodi/${row._id}`)}>
-				<span className="material-symbols-outlined">edit_note</span>
+			<button className={`btn btn-active ${row.active ? `active` : `inactive`}`}>
+				<span className="material-symbols-outlined">{row.active ? `toggle_on` : `toggle_off`}</span>
 			</button>
 		),
 		sortable: true,
 		width: "100px",
-		id: "delete",
 	},
 	{
 		name: "Naziv",
@@ -31,6 +30,16 @@ const columns = [
 		name: "Kategorija",
 		selector: (row) => row.category,
 		sortable: true,
+	},
+	{
+		name: "Izmeni",
+		selector: (row) => (
+			<button className="btn btn-edit" onClick={() => Router.push(`./proizvodi/${row._id}`)}>
+				<span className="material-symbols-outlined">edit_note</span>
+			</button>
+		),
+		sortable: true,
+		width: "100px",
 	},
 ];
 
