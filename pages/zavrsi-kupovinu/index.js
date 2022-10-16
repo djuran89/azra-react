@@ -124,10 +124,10 @@ const FinishOrder = (props) => {
 					{!isLogin && (
 						<section className={style.selectButton}>
 							<button onClick={() => setIsFizickaLica(true)} className={isFizickaLica ? style.active : ""}>
-								Fizicka lica
+								Isporuka na adresu
 							</button>
 							<button onClick={() => setIsFizickaLica(false)} className={!isFizickaLica ? style.active : ""}>
-								Pravna lica
+								Prijava na nalog
 							</button>
 						</section>
 					)}

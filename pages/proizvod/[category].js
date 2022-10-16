@@ -8,7 +8,6 @@ import SingleProduct from "./../../components/product/product";
 import MobileHeader from "./../../components/header/mobileHeader";
 import Header from "./../../components/header/header";
 import Loading from "./../../components/loading/loading";
-import style from "./Product.module.scss";
 
 const Product = ({ ...props }) => {
 	const dispatch = useDispatch();
@@ -38,7 +37,7 @@ const Product = ({ ...props }) => {
 
 	const renderPorudcts = renderProducts.map((el, i) => (
 		<div id={`${el.name}`} key={i}>
-			<SingleProduct product={el} pageNumber={i + 1} products={renderProducts} />
+			<SingleProduct product={el} category={category} pageNumber={i + 1} products={renderProducts} />
 		</div>
 	));
 

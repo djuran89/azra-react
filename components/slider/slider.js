@@ -6,7 +6,7 @@ import styles from "./Slider.module.scss";
 const Slider = () => {
 	return (
 		<div className={styles.slideHolder}>
-			<img className={styles.sliderImg} src="./slider.jpg" alt="Slider" />
+			<img className={styles.sliderImg} src="./slider.png" alt="Slider" />
 			<div className={styles.text}>
 				<div className={styles.slideText}>Za ekipu iz kanca<br />koja bira zravo</div>
 				{/* <div>

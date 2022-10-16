@@ -7,13 +7,25 @@ import { ordersAction } from "../../redux/action";
 import style from "./Product.module.scss";
 
 const Product = (props) => {
-	const { product, products } = props;
-	const dispatch = useDispatch();
-	const { enqueueSnackbar } = useSnackbar();
-	const [orders, setOrders, addOrderQuantity] = [useSelector((state) => state.orders), (state) => dispatch(ordersAction.setOrder(state)), (state) => dispatch(ordersAction.addQuantity(state))];
-	const [quantity, setQuantity] = React.useState(1);
+	const { product, products, category } = props;
 	const productNumber = products.map((el) => el._id).indexOf(product._id);
 
+	const [multiplay, setMultiplay] = React.useState(1);
+	const dispatch = useDispatch();
+	const { enqueueSnackbar } = useSnackbar();
+	const [quantity, setQuantity] = React.useState(1);
+	const [orders, setOrders, addOrderQuantity] = [
+		useSelector((state) => state.orders),
+		(state) => dispatch(ordersAction.setOrder(state)),
+		(state) => dispatch(ordersAction.addQuantity(state)),
+	];
+
+	React.useEffect(() => {
+		setMultiplay(category === "Voće" ? 5 : 1);
+		setQuantity(1);
+	}, [category]);
+
+	console.log(multiplay);
 	const makeColorRGBA = (color) => {
 		if (!color) return "#fff";
 		const { r, g, b, a } = color;
@@ -33,12 +45,21 @@ const Product = (props) => {
 		}
 	};
 
-	const setQuantityValue = () => quantity*100 >= 1000 ? `${quantity*100/1000} kg` : `${quantity*100} g` 
-
+	const setQuantityValue = () =>
+		quantity * multiplay * 100 >= 1000 ? `${(quantity * multiplay * 100) / 1000} kg` : `${quantity * multiplay * 100} g`;
 
 	const index = products.map((el) => el._id).indexOf(product._id);
 	const lastIndex = products.length;
-	const renderSliders = products.map((el, i) => <a key={i} style={{ borderColor: makeColorRGBA(products[productNumber].colors[1]), backgroundColor: productNumber === i ? makeColorRGBA(products[productNumber].colors[1]) : "transparent" }} href={`#${el.name}`}></a>);
+	const renderSliders = products.map((el, i) => (
+		<a
+			key={i}
+			style={{
+				borderColor: makeColorRGBA(products[productNumber].colors[1]),
+				backgroundColor: productNumber === i ? makeColorRGBA(products[productNumber].colors[1]) : "transparent",
+			}}
+			href={`#${el.name}`}
+		></a>
+	));
 
 	if (products.length === 0) return <>Loading...</>;
 
@@ -79,7 +100,7 @@ const Product = (props) => {
 						<button className={style.remove} onClick={removeQuantity}>
 							<span className="material-symbols-outlined">remove</span>
 						</button>
-						<div>{setQuantityValue({quantity})}</div>
+						<div>{setQuantityValue({ quantity })}</div>
 						<button className={style.add} onClick={addQuantity}>
 							<span className="material-symbols-outlined">add</span>
 						</button>
