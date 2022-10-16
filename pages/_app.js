@@ -37,6 +37,12 @@ const GetPorducts = async () => {
 		console.log(err);
 	}
 };
+
+const SetQuantityValue = (quantity, category) => {
+	const multiplay = category === "Voće" ? 5 : 1;
+	return quantity * multiplay * 100 >= 1000 ? `${(quantity * multiplay * 100) / 1000} kg` : `${quantity * multiplay * 100} g`;
+}
+
 const httpErrorHandler = (msg, type) => console.error(msg);
 const btnLoading = `<span id="loading"><span class="material-symbols-outlined">cached</span> Obradjuje se...</span>`;
 function MyApp({ Component, pageProps }) {
@@ -83,6 +89,8 @@ function MyApp({ Component, pageProps }) {
 						{...pageProps}
 						setPageTitle={setPageTitle}
 						getPorducts={GetPorducts}
+						setQuantityValue={SetQuantityValue}
+						
 						httpErrorHandler={httpErrorHandler}
 						btnLoading={btnLoading}
 						isMobile={isMobile}

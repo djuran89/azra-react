@@ -25,7 +25,6 @@ const Product = (props) => {
 		setQuantity(1);
 	}, [category]);
 
-	console.log(multiplay);
 	const makeColorRGBA = (color) => {
 		if (!color) return "#fff";
 		const { r, g, b, a } = color;
@@ -45,7 +44,7 @@ const Product = (props) => {
 		}
 	};
 
-	const setQuantityValue = () =>
+	const setQuantityValue = () => 
 		quantity * multiplay * 100 >= 1000 ? `${(quantity * multiplay * 100) / 1000} kg` : `${quantity * multiplay * 100} g`;
 
 	const index = products.map((el) => el._id).indexOf(product._id);

@@ -72,7 +72,12 @@ const FinishOrder = (props) => {
 		isMobile && (hideOrders ? setTextFinishOrder("Sakri vašu poručbinu") : setTextFinishOrder("Prikaži vašu poručbinu"));
 	};
 
-	const setQuantityValue = (q) => (q * 100 >= 1000 ? `${(q * 100) / 1000} kg` : `${q * 100} g`);
+	// const setQuantityValue = (q) => (q * 100 >= 1000 ? `${(q * 100) / 1000} kg` : `${q * 100} g`);
+	const setQuantityValue = (quantity, category) => {
+		const multiplay = category === "Voće" ? 5 : 1;
+		return quantity * multiplay * 100 >= 1000 ? `${(quantity * multiplay * 100) / 1000} kg` : `${quantity * multiplay * 100} g`;
+	};
+
 	const totalPrice = orders.length > 0 ? orders.map((el) => el.quantity * el.price).reduce((a, b) => a + b) : 0;
 	const renderTxt =
 		isMobile &&
@@ -84,7 +89,7 @@ const FinishOrder = (props) => {
 	const renderOrders = orders.map((el, i) => (
 		<section key={i} className={style.singleOrder}>
 			<div className={style.imgHolder}>
-				<div className={style.quantity}>{setQuantityValue(el.quantity)}</div>
+				<div className={style.quantity}>{setQuantityValue(el.quantity, el.category)}</div>
 				<img src={el.image} alt={el.Name} />
 			</div>
 
