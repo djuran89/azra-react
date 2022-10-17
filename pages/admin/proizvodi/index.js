@@ -5,7 +5,6 @@ import axios from "axios";
 import DataTable from "react-data-table-component";
 
 import Header from "./../../../components/admin/header";
-import { $where } from "../../../../node/models/product";
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
 	<div className="data-table-search">
