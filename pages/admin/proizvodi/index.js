@@ -1,10 +1,9 @@
 import Link from "next/link";
 import React from "react";
 import axios from "axios";
-import DataTable, { memoize } from "react-data-table-component";
+import DataTable from "react-data-table-component";
 
 import Header from "./../../../components/admin/header";
-import columns from "./../../../components/admin/columns/productsColumes";
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
 	<div className="data-table-search">
@@ -25,10 +24,64 @@ const FilterComponent = ({ filterText, onFilter, onClear }) => (
 );
 
 export default function Proizvodi(props) {
+	const columns = [
+		{
+			selector: (row) => (
+				<button className="btn btn-edit" onClick={() => Router.push(`./proizvodi/${row._id}`)}>
+					<span className="material-symbols-outlined">edit_note</span>
+				</button>
+			),
+			sortable: true,
+			width: "50px",
+			style: {
+				padding: "0px 4px",
+			},
+		},
+		{
+			name: "On",
+			selector: (row) => (
+				<button onClick={() => onChangeActive(row)} className={`btn btn-active ${row.active ? `on` : `off`}`}>
+					<span className={row.active ? `on` : `off`}></span>
+				</button>
+			),
+			sortable: true,
+			sortField: "active",
+			width: "40px",
+			compact: 1,
+		},
+
+		{
+			name: "Naziv",
+			selector: (row) => row.name,
+			sortable: true,
+		},
+		{
+			name: "Cena",
+			selector: (row) => (
+				<input className="input-price" type="text" pattern="\d*" value={row.price} onChange={(e) => onChangePrice(e, row)} />
+			),
+			sortable: true,
+			width: "100px",
+		},
+		{
+			name: "Opis",
+			selector: (row) => row.description,
+			sortable: true,
+			hide: "sm",
+		},
+		{
+			name: "Kategorija",
+			selector: (row) => row.category,
+			sortable: true,
+			hide: "sm",
+		},
+	];
+	const updateProductAfter = 700;
 	const { httpErrorHandler } = props;
 	const [products, setProducts] = React.useState([]);
 	const [filterText, setFilterText] = React.useState("");
 	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
+	const [timeoutFn, setTimeoutFn] = React.useState(null);
 
 	React.useEffect(() => {
 		products.length === 0 &&
@@ -38,15 +91,51 @@ export default function Proizvodi(props) {
 				.catch((err) => httpErrorHandler(err));
 	}, []);
 
-	const filteredItems = products.filter((item) => JSON.stringify(item).toLowerCase().indexOf(filterText.toLowerCase()) !== -1);
+	const onChangePrice = async (e, row) => {
+		timeoutFn && clearTimeout(timeoutFn);
 
-	const onChangeActive = (row) => {
-		axios
-			.put("/api/product/active", row)
-			.then((res) => setProducts(res))
-			.catch((err) => console.error(err));
+		const updatedProduct = { ...row, price: e.target.value };
+		const updatedProducts = products.map((obj) => (obj._id === row._id ? updatedProduct : obj));
+		delete updatedProducts.image;
+		setProducts(updatedProducts);
+
+		const updateProduct = async () => {
+			try {
+				e.target.classList.remove("changed", "error");
+
+				await axios.put("/api/product/price", updatedProduct);
+
+				e.target.classList.add("changed");
+				setTimeout(() => e.target.classList.remove("changed"), 300);
+			} catch (err) {
+				e.target.classList.add("error");
+				console.error(err);
+			}
+		};
+
+		setTimeoutFn(setTimeout(updateProduct, updateProductAfter));
 	};
 
+	const onChangeActive = async (row) => {
+		const updatedProduct = { ...row, active: !row.active };
+		const updatedProducts = products.map((obj) => (obj._id === row._id ? updatedProduct : obj));
+		delete updatedProducts.image;
+		try {
+			setProducts(updatedProducts);
+			await axios.put("/api/product/active", updatedProduct);
+		} catch (err) {
+			console.error(err);
+		}
+	};
+
+	const handleSort = (col, sortDirection) => {
+		if (col.sortField === "active") {
+			const sortableProducts = products.sort((a, b) => (sortDirection === "desc" ? a.active < b.active : a.active > b.active));
+			setProducts([...sortableProducts]);
+		}
+	};
+
+	const filteredItems = products.filter((item) => JSON.stringify(item).toLowerCase().indexOf(filterText.toLowerCase()) !== -1);
 	const subHeaderComponent = React.useMemo(() => {
 		const handleClear = () => {
 			if (filterText) {
@@ -67,11 +156,11 @@ export default function Proizvodi(props) {
 				pagination
 				columns={columns}
 				data={filteredItems}
-				onRowClicked={onChangeActive}
 				subHeaderComponent={subHeaderComponent}
 				defaultSortField="name"
 				striped
 				subHeader
+				onSort={handleSort}
 			/>
 		</>
 	);
