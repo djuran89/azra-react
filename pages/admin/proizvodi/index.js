@@ -1,9 +1,11 @@
 import Link from "next/link";
+import Router from "next/router";
 import React from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
 
 import Header from "./../../../components/admin/header";
+import { $where } from "../../../../node/models/product";
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
 	<div className="data-table-search">
@@ -58,7 +60,14 @@ export default function Proizvodi(props) {
 		{
 			name: "Cena",
 			selector: (row) => (
-				<input className="input-price" type="text" pattern="\d*" value={row.price} onChange={(e) => onChangePrice(e, row)} />
+				<input
+					id={`input-${row._id}`}
+					className="input-price"
+					type="text"
+					pattern="\d*"
+					value={row.price}
+					onChange={(e) => onChangePrice(e, row)}
+				/>
 			),
 			sortable: true,
 			width: "100px",
@@ -90,6 +99,8 @@ export default function Proizvodi(props) {
 				.then((res) => setProducts(res))
 				.catch((err) => httpErrorHandler(err));
 	}, []);
+
+	const clickHandler = (e) => document.getElementById(`input-${e._id}`).focus();
 
 	const onChangePrice = async (e, row) => {
 		timeoutFn && clearTimeout(timeoutFn);
@@ -158,6 +169,7 @@ export default function Proizvodi(props) {
 				data={filteredItems}
 				subHeaderComponent={subHeaderComponent}
 				defaultSortField="name"
+				onRowClicked={clickHandler}
 				striped
 				subHeader
 				onSort={handleSort}
