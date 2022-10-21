@@ -4,10 +4,11 @@ import { useSelector } from "react-redux";
 
 import Basket from "./../basket/basket";
 
-const MobileHeader = () => {
+const MobileHeader = (props) => {
+	const { setQuantityValue } = props;
 	const orders = useSelector((state) => state.orders);
 	const [isOpenCheckout, setIsOpenCheckout] = React.useState(false);
-	
+
 	const setOpenCheckout = () => orders.length > 0 && setIsOpenCheckout(true);
 
 	return (
@@ -19,7 +20,7 @@ const MobileHeader = () => {
 					</Link>
 				</div>
 
-				<div className="center" style={{justifyContent: 'center', marginRight: 0}}>
+				<div className="center" style={{ justifyContent: "center", marginRight: 0 }}>
 					<h1>
 						<Link href="/">
 							<img className="logo" src="/logo.png" alt="Pilja" />
@@ -35,7 +36,7 @@ const MobileHeader = () => {
 				</div>
 			</div>
 
-			<Basket isOpen={isOpenCheckout} toogleBasket={setIsOpenCheckout} />
+			<Basket isOpen={isOpenCheckout} toogleBasket={setIsOpenCheckout} setQuantityValue={setQuantityValue} />
 		</header>
 	);
 };
