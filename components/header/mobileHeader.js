@@ -7,7 +7,7 @@ import Basket from "./../basket/basket";
 const MobileHeader = () => {
 	const orders = useSelector((state) => state.orders);
 	const [isOpenCheckout, setIsOpenCheckout] = React.useState(false);
-
+	
 	const setOpenCheckout = () => orders.length > 0 && setIsOpenCheckout(true);
 
 	return (

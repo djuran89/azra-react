@@ -1,41 +1,33 @@
-import { useSnackbar } from "notistack";
 import React from "react";
 import Link from "next/link";
+import Head from "next/head";
+
+import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
 
 import { ordersAction } from "../../redux/action";
 import style from "./Product.module.scss";
 
 const Product = (props) => {
-	const { product, products, category } = props;
-	const productNumber = products.map((el) => el._id).indexOf(product._id);
-
-	const [multiplay, setMultiplay] = React.useState(1);
+	const router = useRouter();
 	const dispatch = useDispatch();
-	const { enqueueSnackbar } = useSnackbar();
+	const { product, products, category, setQuantityValue, urlString } = props;
+	const productNumber = products.map((el) => el._id).indexOf(product._id);
 	const [quantity, setQuantity] = React.useState(1);
 	const [orders, setOrders, addOrderQuantity] = [
 		useSelector((state) => state.orders),
 		(state) => dispatch(ordersAction.setOrder(state)),
 		(state) => dispatch(ordersAction.addQuantity(state)),
 	];
+	React.useEffect(() => setQuantity(1), [category]);
 
-	React.useEffect(() => {
-		setMultiplay(category === "Voće" ? 5 : 1);
-		setQuantity(1);
-	}, [category]);
+	const makeColorRGBA = ({ r, g, b, a }) => `rgba(${r},${g},${b},${a})`;
 
-	const makeColorRGBA = (color) => {
-		if (!color) return "#fff";
-		const { r, g, b, a } = color;
-		return `rgba(${r},${g},${b},${a})`;
-	};
-
-	const removeQuantity = () => quantity > 1 && setQuantity(--quantity);
 	const addQuantity = () => setQuantity(++quantity);
+	const removeQuantity = () => quantity > 1 && setQuantity(--quantity);
+
 	const onCreateOrder = () => {
 		setQuantity(1);
-		// enqueueSnackbar("Dodato u korpu.");
 		const index = orders.map((el) => el._id).indexOf(product._id);
 		if (index === -1) {
 			setOrders([...orders, { ...product, quantity }]);
@@ -43,9 +35,6 @@ const Product = (props) => {
 			addOrderQuantity({ ...product, quantity: quantity + orders[index].quantity });
 		}
 	};
-
-	const setQuantityValue = () => 
-		quantity * multiplay * 100 >= 1000 ? `${(quantity * multiplay * 100) / 1000} kg` : `${quantity * multiplay * 100} g`;
 
 	const index = products.map((el) => el._id).indexOf(product._id);
 	const lastIndex = products.length;
@@ -56,71 +45,71 @@ const Product = (props) => {
 				borderColor: makeColorRGBA(products[productNumber].colors[1]),
 				backgroundColor: productNumber === i ? makeColorRGBA(products[productNumber].colors[1]) : "transparent",
 			}}
-			href={`#${el.name}`}
+			href={`#${urlString(el.name)}`}
 		></a>
 	));
 
-	if (products.length === 0) return <>Loading...</>;
-
 	return (
-		<section className={style.productHolder}>
-			{index !== 0 && (
-				<div id="left-slide">
-					<Link href={`#${products[index - 1].name}`}>
-						<a>
-							<span className="material-symbols-outlined">arrow_back_ios</span>
-							{products[index - 1].name}
-						</a>
-					</Link>
-				</div>
-			)}
+		<>
+			<section className={style.productHolder}>
+				{index !== 0 && (
+					<div id="left-slide">
+						<Link href={`#${urlString(products[index - 1].name)}`}>
+							<a>
+								<span className="material-symbols-outlined">arrow_back_ios</span>
+								{products[index - 1].name}
+							</a>
+						</Link>
+					</div>
+				)}
 
-			{index + 1 !== lastIndex && (
-				<div id="right-slide">
-					<Link href={`#${products[index + 1].name}`}>
-						<a>
-							{products[index + 1].name}
-							<span className="material-symbols-outlined">arrow_forward_ios</span>
-						</a>
-					</Link>
-				</div>
-			)}
-			<section className={style.productImage}>
-				<div className={style.imageHolder}>
-					<img src={product.image} alt={product.name} />
-				</div>
+				{index + 1 !== lastIndex && (
+					<div id="right-slide">
+						<Link href={`#${urlString(products[index + 1].name)}`}>
+							<a>
+								{products[index + 1].name}
+								<span className="material-symbols-outlined">arrow_forward_ios</span>
+							</a>
+						</Link>
+					</div>
+				)}
+				<section className={style.productImage}>
+					<div className={style.imageHolder}>
+						<img src={`/images/${product._id}.png`} alt={product.name} />
+					</div>
 
-				<div className={style.slidersBtn}>{renderSliders}</div>
+					<div className={style.slidersBtn}>{renderSliders}</div>
 
-				<div className={style.productName}>
-					<h2>{product.name}</h2>
+					<div className={style.productName}>
+						<h2>{product.name}</h2>
 
-					<div className={style.quantityHolder}>
-						<button className={style.remove} onClick={removeQuantity}>
-							<span className="material-symbols-outlined">remove</span>
-						</button>
-						<div>{setQuantityValue({ quantity })}</div>
-						<button className={style.add} onClick={addQuantity}>
-							<span className="material-symbols-outlined">add</span>
+						<div className={style.quantityHolder}>
+							<button className={style.remove} onClick={removeQuantity}>
+								<span className="material-symbols-outlined">remove</span>
+							</button>
+							<div>{setQuantityValue(quantity, product)}</div>
+							<button className={style.add} onClick={addQuantity}>
+								<span className="material-symbols-outlined">add</span>
+							</button>
+						</div>
+					</div>
+					<div className={style.description}>
+						<p>{product.description}</p>
+					</div>
+					<div className={style.buyInfo}>
+						<div className={style.totalPrice}>
+							<div>Ukupna cena</div>
+							<div>{quantity * product.price},00 RSD</div>
+						</div>
+						<button onClick={onCreateOrder}>
+							<div>Dodaj u korpu</div>
+							<span className="material-symbols-outlined">shopping_basket</span>
 						</button>
 					</div>
-				</div>
-				<div className={style.description}>
-					<p>{product.description}</p>
-				</div>
-				<div className={style.buyInfo}>
-					<div className={style.totalPrice}>
-						<div>Ukupna cena</div>
-						<div>{quantity * product.price},00 RSD</div>
-					</div>
-					<button onClick={onCreateOrder}>
-						<div>Dodaj u korpu</div>
-						<span className="material-symbols-outlined">shopping_basket</span>
-					</button>
-				</div>
-				<div className="backBG" style={{ backgroundColor: makeColorRGBA(product.colors[0]) }}></div>
+					<div className="backBG" style={{ backgroundColor: makeColorRGBA(product.colors[0]) }}></div>
+				</section>
 			</section>
-		</section>
+		</>
 	);
 };
 export default Product;

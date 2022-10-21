@@ -1,16 +1,17 @@
 import Link from "next/link";
-import { useSelector } from "react-redux";
 import style from "./style.module.scss";
 
-export default function Footer() {
-	const products = useSelector((state) => state.products);
+export default function Footer(props) {
+	const { products } = props;
 	const categories = [...new Set(products.map((el) => el.category))];
+
+	const urlString = (string) => string.replaceAll(" ", "-");
 
 	const renderLinks = categories.map((category, i) => {
 		const prod = products.filter((product) => product.category === category)[0];
 		return (
 			<li key={i}>
-				<Link href={`/proizvod/${category}#${prod.name}`}>
+				<Link href={`/proizvod/${urlString(category)}#${urlString(prod.name)}`}>
 					<a className="link">{category}</a>
 				</Link>
 			</li>

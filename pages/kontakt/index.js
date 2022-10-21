@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Head from "next/head";
 
 import Header from "./../../components/header/header";
 import Footer from "./../../components/footer/footer";
@@ -6,10 +7,14 @@ import Footer from "./../../components/footer/footer";
 import style from "./style.module.scss";
 
 export default function Contact(props) {
-	props.getPorducts();
+	const { products, setQuantityValue } = props;
 	return (
 		<>
-			<Header />
+			<Head>
+				<title>Kontaktiraj Pilju</title>
+			</Head>
+
+			<Header products={products} setQuantityValue={setQuantityValue} />
 			<div className="content">
 				<div className={style.konakt}>
 					<h1>Kontaktiraj pilju</h1>
@@ -75,7 +80,7 @@ export default function Contact(props) {
 					</ul>
 				</div>
 			</div>
-			<Footer />
+			<Footer products={products} />
 		</>
 	);
 }

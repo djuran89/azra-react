@@ -1,52 +1,54 @@
 import React from "react";
-import axios from "axios";
-import { useRouter } from "next/router";
-import { useSelector, useDispatch } from "react-redux";
+import Head from "next/head";
+import Router, { useRouter } from "next/router";
 
-import { productsAction } from "./../../redux/action";
 import SingleProduct from "./../../components/product/product";
 import MobileHeader from "./../../components/header/mobileHeader";
 import Header from "./../../components/header/header";
-import Loading from "./../../components/loading/loading";
 
-const Product = ({ ...props }) => {
-	const dispatch = useDispatch();
+const Product = (props) => {
 	const router = useRouter();
 	const { category } = router.query;
-	const { isMobile, httpErrorHandler } = props;
-	const [products, setProducts] = [useSelector((state) => state.products), (state) => dispatch(productsAction.setProducts(state))];
-	const [renderProducts, setRenderProducts] = React.useState([]);
+	const { products, isMobile, setQuantityValue, urlString, mainTitle } = props;
+	
+	const [prodRender, setprodRender] = React.useState([]);
 
 	React.useEffect(() => {
-		if (category) {
-			if (products.length > 0) {
-				setRenderProducts(getFilterProducts(products));
-			} else {
-				axios
-					.get(`/api/product`)
-					.then((res) => {
-						setProducts(res);
-						setRenderProducts(getFilterProducts(res));
-					})
-					.catch((err) => httpErrorHandler(err));
-			}
-		}
+		const productName = decodeURI(props.urlString(window.location.hash).split("#")[1]);
+		const filterProducts = products.filter((el) => el.category === category.replace("-", " "));
+
+		const renderPorudcts = filterProducts.map((el, i) => (
+			<div id={`${urlString(el.name)}`} key={i}>
+				<SingleProduct
+					product={el}
+					setQuantityValue={setQuantityValue}
+					category={category}
+					pageNumber={i + 1}
+					products={filterProducts}
+					urlString={urlString}
+				/>
+			</div>
+		));
+		setprodRender(renderPorudcts);
+		const link = document.createElement("a");
+		link.href = "#" + productName;
+		link.click();
 	}, [category]);
 
-	const getFilterProducts = (prod) => prod.filter((el) => el.category === category);
-
-	const renderPorudcts = renderProducts.map((el, i) => (
-		<div id={`${el.name}`} key={i}>
-			<SingleProduct product={el} category={category} pageNumber={i + 1} products={renderProducts} />
-		</div>
-	));
-
-	if (renderProducts.length === 0) return <Loading />;
 	return (
 		<>
-			{isMobile ? <MobileHeader /> : <Header />}
+			<Head>
+				<title>
+					{/* {mainTitle} - {productName.replaceAll("-", " ")} */}
+				</title>
+			</Head>
+			{isMobile ? (
+				<MobileHeader setQuantityValue={setQuantityValue} />
+			) : (
+				<Header products={products} setQuantityValue={setQuantityValue} />
+			)}
 			<div id="slider" className={`slider `}>
-				<div className="slides">{renderPorudcts}</div>
+				<div className="slides">{prodRender}</div>
 			</div>
 		</>
 	);

@@ -87,7 +87,7 @@ export default function Proizvodi(props) {
 	const updateProductAfter = 700;
 	const { httpErrorHandler } = props;
 	const [products, setProducts] = React.useState([]);
-	const [filterText, setFilterText] = React.useState("");
+	const [filterText, setFilterText] = React.useState("sokov");
 	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
 	const [timeoutFn, setTimeoutFn] = React.useState(null);
 

@@ -1,6 +1,6 @@
 import React from "react";
 import axios from "axios";
-import { useSnackbar } from "notistack";
+import Head from "next/head";
 import { useSelector, useDispatch } from "react-redux";
 
 import style from "./style.module.scss";
@@ -12,10 +12,8 @@ import PravnaLica from "../../components/zavrsi-kupovinu/pravnaLica";
 import CompanyRender from "../../components/zavrsi-kupovinu/companyRender";
 
 const FinishOrder = (props) => {
-	props.getPorducts();
-
-	const { isMobile, btnLoading } = props;
 	const dispatch = useDispatch();
+	const { products, isMobile, btnLoading, setQuantityValue, mainTitle } = props;
 	const [orders, setOrders] = [useSelector((state) => state.orders), (state) => dispatch(ordersAction.setOrder(state))];
 	const [hideOrders, sethideOrders] = React.useState(true);
 	const [textFinishOrder, setTextFinishOrder] = React.useState("Prikaži vašu poručbinu");
@@ -72,12 +70,6 @@ const FinishOrder = (props) => {
 		isMobile && (hideOrders ? setTextFinishOrder("Sakri vašu poručbinu") : setTextFinishOrder("Prikaži vašu poručbinu"));
 	};
 
-	// const setQuantityValue = (q) => (q * 100 >= 1000 ? `${(q * 100) / 1000} kg` : `${q * 100} g`);
-	const setQuantityValue = (quantity, category) => {
-		const multiplay = category === "Voće" ? 5 : 1;
-		return quantity * multiplay * 100 >= 1000 ? `${(quantity * multiplay * 100) / 1000} kg` : `${quantity * multiplay * 100} g`;
-	};
-
 	const totalPrice = orders.length > 0 ? orders.map((el) => el.quantity * el.price).reduce((a, b) => a + b) : 0;
 	const renderTxt =
 		isMobile &&
@@ -89,8 +81,8 @@ const FinishOrder = (props) => {
 	const renderOrders = orders.map((el, i) => (
 		<section key={i} className={style.singleOrder}>
 			<div className={style.imgHolder}>
-				<div className={style.quantity}>{setQuantityValue(el.quantity, el.category)}</div>
-				<img src={el.image} alt={el.Name} />
+				<div className={style.quantity}>{setQuantityValue(el.quantity, el)}</div>
+				<img src={`/images/${el._id}.png`} alt={el.Name} />
 			</div>
 
 			<div className={style.nameProduct}>{el.name}</div>
@@ -101,7 +93,11 @@ const FinishOrder = (props) => {
 
 	return (
 		<>
-			<Header />
+			<Head>
+				<title>{mainTitle} - Naplata</title>
+			</Head>
+
+			<Header products={products} setQuantityValue={setQuantityValue} />
 
 			<div className={`${style.container}`}>
 				<div className={style.maintTitle}>

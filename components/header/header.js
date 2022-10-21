@@ -4,18 +4,19 @@ import { useSelector } from "react-redux";
 
 import Basket from "./../basket/basket";
 
-const Header = () => {
+const Header = (props) => {
+	const { products, setQuantityValue } = props;
 	const orders = useSelector((state) => state.orders);
 	const [isOpenCheckout, setIsOpenCheckout] = React.useState(false);
 	const [openMenu, setOpenMenu] = React.useState(false);
-	const products = useSelector((state) => state.products);
 	const categories = [...new Set(products.map((el) => el.category))];
 	const setOpenCheckout = () => orders.length > 0 && setIsOpenCheckout(true);
 
+	const urlString = (string) => string.replaceAll(" ", "-");
 	const renderLinks = categories.map((category, i) => {
-		const prod = products.filter(product => product.category === category)[0];
+		const prod = products.filter((product) => product.category === category)[0];
 		return (
-			<Link key={i} href={`/proizvod/${category}#${prod.name}`}>
+			<Link key={i} href={`/proizvod/${urlString(category)}#${urlString(prod.name)}`}>
 				<a className="link">{category}</a>
 			</Link>
 		);
@@ -63,7 +64,7 @@ const Header = () => {
 				</div>
 			</div>
 
-			<Basket isOpen={isOpenCheckout} toogleBasket={setIsOpenCheckout} />
+			<Basket isOpen={isOpenCheckout} toogleBasket={setIsOpenCheckout} setQuantityValue={setQuantityValue} />
 		</header>
 	);
 };

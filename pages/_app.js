@@ -4,10 +4,8 @@ import axios from "axios";
 import { Provider } from "react-redux";
 import { SnackbarProvider } from "notistack";
 
-import { useSelector, useDispatch } from "react-redux";
-import { productsAction } from "./../redux/action";
+import Loading from "./../components/loading/loading";
 
-import withHeader from "../hocs/withHeader";
 import store from "./../redux/store";
 import "../styles/globals.scss";
 import "../styles/globals-mobile.scss";
@@ -25,30 +23,36 @@ axios.interceptors.response.use(
 		throw new Error(error.replace("Error", "Greška"));
 	}
 );
-const GetPorducts = async () => {
-	const [products, setProducts] = [useSelector((state) => state.products), (state) => dispatch(productsAction.setProducts(state))];
-	const dispatch = useDispatch();
-	try {
-		if (products.length === 0) {
-			const res = await axios.get(`/api/product`);
-			setProducts(res);
-		}
-	} catch (err) {
-		console.log(err);
+
+const SetQuantityValue = (quantity, product) => {
+	const unit = product.categoryObj.unit;
+	switch (unit) {
+		case "g":
+			return `${quantity * 100} g`;
+		case "kg":
+			return quantity * 500 >= 1000 ? (quantity * 500) / 1000 + " kg" : quantity * 500 + " g";
+		case "kom":
+			return quantity;
+		default:
+			return quantity;
 	}
 };
-
-const SetQuantityValue = (quantity, category) => {
-	const multiplay = category === "Voće" ? 5 : 1;
-	return quantity * multiplay * 100 >= 1000 ? `${(quantity * multiplay * 100) / 1000} kg` : `${quantity * multiplay * 100} g`;
-}
-
+const UrlString = (string) => string.replaceAll(" ", "-");
+const SetPageTitle = (title) => {
+	document.title = title;
+	console.log(title);
+};
 const httpErrorHandler = (msg, type) => console.error(msg);
 const btnLoading = `<span id="loading"><span class="material-symbols-outlined">cached</span> Obradjuje se...</span>`;
 function MyApp({ Component, pageProps }) {
 	const [pageTitle, setPageTitle] = React.useState("Home");
 	const [isMobile, setIsMobile] = React.useState(false);
+	const [products, setProducts] = React.useState([]);
 	const notistackRef = React.useRef();
+
+	React.useEffect(() => {
+		axios.get("/api/product").then((res) => setProducts(res));
+	}, []);
 
 	React.useEffect(() => {
 		let vh = window.innerHeight * 0.01;
@@ -60,11 +64,14 @@ function MyApp({ Component, pageProps }) {
 		setIsMobile(Boolean(navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i)));
 	}, []);
 
+	if (products.length === 0) return <Loading />;
+
 	return (
 		<>
 			<Head>
-				<title>{pageTitle}</title>
+				<title>Pilja</title>
 				<meta name="theme-color" content="#fff" media="(prefers-color-scheme: light)"></meta>
+				<meta name="description" content="Pilja ti nudi ponudu voća, orašastih plodova, sušenog voća, čokolada i ceđenih sokova" />
 				<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 				<link rel="preconnect" href="https://fonts.googleapis.com" />
 				<link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
@@ -79,7 +86,7 @@ function MyApp({ Component, pageProps }) {
 			</Head>
 			<Provider store={store}>
 				<SnackbarProvider
-					ref={notistackRef}
+					// ref={notistackRef}
 					maxSnack={1}
 					autoHideDuration={2000}
 					classes="hotification"
@@ -87,13 +94,12 @@ function MyApp({ Component, pageProps }) {
 				>
 					<Component
 						{...pageProps}
-						setPageTitle={setPageTitle}
-						getPorducts={GetPorducts}
+						products={products}
 						setQuantityValue={SetQuantityValue}
-						
-						httpErrorHandler={httpErrorHandler}
 						btnLoading={btnLoading}
+						urlString={UrlString}
 						isMobile={isMobile}
+						mainTitle="Pilja"
 					/>
 				</SnackbarProvider>
 			</Provider>
