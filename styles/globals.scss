@@ -181,11 +181,11 @@ footer {
 .slider {
 	width: 100%;
 	text-align: center;
-	overflow: hidden;
+	// overflow: hidden;
 }
 .slides {
 	display: flex;
-	overflow-x: auto;
+	// overflow-x: auto;
 	scroll-snap-type: x mandatory;
 	scroll-behavior: smooth;
 	// -webkit-overflow-scrolling: touch;
@@ -209,9 +209,11 @@ footer {
 	justify-content: center;
 	align-items: center;
 }
+
 .slides > div:target {
 	// transform: scale(0.1);
 }
+
 .slider .slidesPosition > a {
 	display: inline-flex;
 	width: 12px;
@@ -252,12 +254,6 @@ label.active {
 	font-size: 14px !important;
 	color: $mainColor !important;
 }
-// input {
-// 	-webkit-user-select: all;
-// 	-moz-user-select: all;
-// 	-ms-user-select: all;
-// 	user-select: all;
-// }
 
 .btn-header {
 	overflow: hidden;
