@@ -1,15 +1,16 @@
 import Link from "next/link";
 import { useRouter } from "next/router";
+import axios from "axios";
 
 export default function Header() {
 	const router = useRouter();
 	const pathname = router.pathname.replace("/", "");
-	
+
 	const onPrint = () => window.print();
 	const onLogout = () => {
 		axios
 			.post(`/api/user/logout`)
-			.then(() => Router.push("/admin/login"))
+			.then(() => router.push("/admin/login"))
 			.catch((err) => enqueueSnackbar(err.message, { variant: "error" }));
 	};
 	return (

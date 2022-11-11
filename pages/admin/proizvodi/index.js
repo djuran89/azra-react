@@ -4,6 +4,7 @@ import React from "react";
 import axios from "axios";
 import DataTable from "react-data-table-component";
 
+import Loading from "./../../../components/loading/loading";
 import Header from "./../../../components/admin/header";
 
 const FilterComponent = ({ filterText, onFilter, onClear }) => (
@@ -85,18 +86,25 @@ export default function Proizvodi(props) {
 		},
 	];
 	const updateProductAfter = 700;
-	const { httpErrorHandler } = props;
 	const [products, setProducts] = React.useState([]);
-	const [filterText, setFilterText] = React.useState("sokov");
+	const [filterText, setFilterText] = React.useState("");
 	const [resetPaginationToggle, setResetPaginationToggle] = React.useState(false);
 	const [timeoutFn, setTimeoutFn] = React.useState(null);
+	const [user, setUser] = React.useState();
+
+	React.useEffect(() => {
+		axios
+			.post(`/api/user/islogin`)
+			.then((res) => (!res ? Router.push("/admin/login") : setUser(res)))
+			.catch((err) => Router.push("/admin"));
+	}, []);
 
 	React.useEffect(() => {
 		products.length === 0 &&
 			axios
 				.get(`/api/product/all`)
 				.then((res) => setProducts(res))
-				.catch((err) => httpErrorHandler(err));
+				.catch((err) => console.error(err));
 	}, []);
 
 	const clickHandler = (e) => document.getElementById(`input-${e._id}`).focus();
@@ -157,6 +165,7 @@ export default function Proizvodi(props) {
 		return <FilterComponent onFilter={(e) => setFilterText(e.target.value)} onClear={handleClear} filterText={filterText} />;
 	}, [filterText, resetPaginationToggle]);
 
+	if (!user) return <Loading />;
 	return (
 		<>
 			<Header />

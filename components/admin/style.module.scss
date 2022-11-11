@@ -113,10 +113,12 @@ $singleOrderHeight: 76px;
 .userInformation {
 	display: flex;
 	justify-content: center;
-	width: 100%;
-	background-color: #fff;
+	width: 1200px;
+	// background-color: #fff;
 	height: auto;
 	margin: 25px 0px;
+	margin: auto;
+	margin-top: 25px;
 	form {
 		width: 100%;
 		padding: 0px 16px;

@@ -18,7 +18,7 @@ const infoObject = {
 	Napomena: "",
 };
 export default function FizickaLica(props) {
-	const { orders, setOrders, btnLoading } = props;
+	const { orders, setOrders, btnLoading, setShowModel } = props;
 	const button = React.useRef();
 	const { enqueueSnackbar } = useSnackbar();
 	const [info, setInfo] = React.useState(infoObject);
@@ -50,22 +50,39 @@ export default function FizickaLica(props) {
 		if (orders.length === 0) return enqueueSnackbar("Poručbina nepostoji...", { variant: "error" });
 		try {
 			disableBtn();
-
 			await axios.post(`/api/order`, { ...info, Orders: orders });
 
-			enqueueSnackbar("Poručbina je prihvaćena. Hvala.", { variant: "success" });
-			setInfo(infoObject);
-			setOrders([]);
 			enableBtn();
-			Router.push("/");
+			setInfo(infoObject);
+			setShowModel(true)
 		} catch (err) {
 			enqueueSnackbar(err.message, { variant: "error" });
 			enableBtn();
 		}
 	};
 
+	const finishOrder = () => {
+		setOrders([]);
+		Router.push("/");
+	};
+
 	return (
 		<section className={style.userInformation}>
+			<div className="model-box">
+				<div className="content">
+					<div className="header">Vaša poručbina je prihvaćena</div>
+					<div className="body">
+						<div className="left">
+							<span class="material-symbols-outlined">verified</span>
+						</div>
+						<div>RO</div>
+					</div>
+					<div className="footer">
+						<button onClick={finishOrder}>Zatvori</button>
+					</div>
+				</div>
+			</div>
+
 			<form onSubmit={onSubmitForm}>
 				<h3>Adresa za isporuku </h3>
 

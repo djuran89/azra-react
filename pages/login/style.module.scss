@@ -1,0 +1,30 @@
+@import "./../../styles/varibles.scss";
+
+.container {
+	display: flex;
+	justify-content: center;
+	align-items: flex-start;
+	margin-top: 50px;
+	height: calc(100vh - $headerHeight);
+	width: 100%;
+	form {
+		display: flex;
+		flex-direction: column;
+		width: 600px;
+		padding: 12px 25px 25px 25px;
+		background-color: #fff;
+		border: 1px solid $borderSecoundColor;
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	.container {
+		margin-top: 0px;
+		form {
+			width: 100%;
+			background-color: transparent;
+			padding: 0px;
+			border: 0px;
+		}
+	}
+}

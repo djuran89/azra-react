@@ -4,6 +4,7 @@ import Head from "next/head";
 
 import { useRouter } from "next/router";
 import { useSelector, useDispatch } from "react-redux";
+import { useSnackbar } from "notistack";
 
 import { ordersAction } from "../../redux/action";
 import style from "./Product.module.scss";
@@ -11,6 +12,7 @@ import style from "./Product.module.scss";
 const Product = (props) => {
 	const router = useRouter();
 	const dispatch = useDispatch();
+	const { enqueueSnackbar } = useSnackbar();
 	const { product, products, category, setQuantityValue, urlString } = props;
 	const productNumber = products.map((el) => el._id).indexOf(product._id);
 	const [quantity, setQuantity] = React.useState(1);
@@ -27,6 +29,8 @@ const Product = (props) => {
 	const removeQuantity = () => quantity > 1 && setQuantity(--quantity);
 
 	const onCreateOrder = () => {
+		enqueueSnackbar("Dodato u korpu.", { variant: "success" });
+
 		setQuantity(1);
 		const index = orders.map((el) => el._id).indexOf(product._id);
 		if (index === -1) {

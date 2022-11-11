@@ -8,7 +8,8 @@ import Loading from "./../../components/loading/loading";
 import Header from "./../../components/admin/header";
 import { useSnackbar } from "notistack";
 
-export default function Admin() {
+export default function Admin(props) {
+	const { setQuantityValue } = props;
 	const columns = [
 		{
 			name: "Ime",
@@ -17,7 +18,13 @@ export default function Admin() {
 		},
 		{
 			name: "Adresa",
-			selector: (row) => `${row.Adresa}, ${row.PostanskiBroj}, ${row.Grad} ${row.Drzava}`,
+			selector: (row) => (
+				<>
+					<div>{row.Adresa}</div>
+					<div>{row.PostanskiBroj}</div>
+					<div>{row.Grad}</div>
+				</>
+			),
 			sortable: true,
 		},
 		{
@@ -25,7 +32,7 @@ export default function Admin() {
 			selector: (row) =>
 				row.Orders.map((el, i) => (
 					<div key={i}>
-						{el.quantity} x {el.name}
+						{setQuantityValue(el.quantity, el)} x {el.name}
 					</div>
 				)),
 			sortable: true,
@@ -37,7 +44,7 @@ export default function Admin() {
 		},
 		{
 			name: "Datum",
-			selector: (row) => moment(row.createdAt).format("DD-MM-YYYY, hh:mm:ss"),
+			selector: (row) => moment(row.createdAt).format("DD MMM YYYY, hh:mm"),
 			sortable: true,
 			id: "datum",
 		},
@@ -62,14 +69,14 @@ export default function Admin() {
 		axios
 			.post(`/api/user/islogin`)
 			.then((res) => (!res ? Router.push("/admin/login") : setUser(res)))
-			.catch((err) => enqueueSnackbar(err.message, { variant: "error" }));
+			.catch((err) => console.log(err));
 	}, []);
 
 	React.useEffect(() => {
 		axios
 			.get(`/api/order`)
 			.then((res) => setData(res))
-			.catch((err) => enqueueSnackbar(err.message, { variant: "error" }));
+			.catch((err) => console.log(err));
 	}, []);
 
 	const onRemove = (Order) => {

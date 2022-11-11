@@ -10,9 +10,11 @@ import Header from "./../../components/header/header";
 import FizickaLica from "../../components/zavrsi-kupovinu/fizickaLica";
 import PravnaLica from "../../components/zavrsi-kupovinu/pravnaLica";
 import CompanyRender from "../../components/zavrsi-kupovinu/companyRender";
+import { useRouter } from "next/router";
 
 const FinishOrder = (props) => {
 	const dispatch = useDispatch();
+	const router = useRouter();
 	const { products, isMobile, btnLoading, setQuantityValue, mainTitle } = props;
 	const [orders, setOrders] = [useSelector((state) => state.orders), (state) => dispatch(ordersAction.setOrder(state))];
 	const [hideOrders, sethideOrders] = React.useState(true);
@@ -20,6 +22,7 @@ const FinishOrder = (props) => {
 	const [isFizickaLica, setIsFizickaLica] = React.useState(true);
 	const [isLogin, setIsLogin] = React.useState(false);
 	const [user, setUser] = [useSelector((state) => state.user), (state) => dispatch(userAction.setUser(state))];
+	const [showModel, setShowModel] = React.useState(false);
 
 	React.useEffect(() => {
 		for (const input of document.getElementsByTagName("input")) {
@@ -91,11 +94,29 @@ const FinishOrder = (props) => {
 		</section>
 	));
 
+	const finishOrder = () => (setOrders([]), router.push("/"), setShowModel(false));
+
 	return (
 		<>
 			<Head>
 				<title>{mainTitle} - Naplata</title>
 			</Head>
+			{showModel && (
+				<div className="model-box">
+					<div className="content">
+						<div className="header">Vaša poručbina je prihvaćena</div>
+						<div className="body">
+							<div className="left">
+								<span class="material-symbols-outlined">verified</span>
+							</div>
+							<div className="right">{renderOrders}</div>
+						</div>
+						<div className="footer">
+							<button onClick={finishOrder}>Zatvori</button>
+						</div>
+					</div>
+				</div>
+			)}
 
 			<Header products={products} setQuantityValue={setQuantityValue} />
 
@@ -134,9 +155,16 @@ const FinishOrder = (props) => {
 					)}
 
 					{isLogin ? (
-						<CompanyRender user={user} setUser={setUser} btnLoading={btnLoading} orders={orders} setOrders={setOrders} />
+						<CompanyRender
+							user={user}
+							setUser={setUser}
+							btnLoading={btnLoading}
+							orders={orders}
+							setOrders={setOrders}
+							setShowModel={setShowModel}
+						/>
 					) : isFizickaLica ? (
-						<FizickaLica orders={orders} setOrders={setOrders} btnLoading={btnLoading} />
+						<FizickaLica orders={orders} setOrders={setOrders} btnLoading={btnLoading} setShowModel={setShowModel} />
 					) : (
 						<PravnaLica user={user} setUser={setUser} btnLoading={btnLoading} />
 					)}

@@ -8,7 +8,7 @@ import Header from "./../components/header/header";
 import Footer from "../components/footer/footer";
 
 const Home = ({ ...props }) => {
-	const { products, urlString, mainTitle } = props;
+	const { products, urlString, mainTitle, setQuantityValue } = props;
 	const [categories, setCategories] = React.useState([]);
 
 	React.useEffect(() => {
@@ -38,7 +38,7 @@ const Home = ({ ...props }) => {
 				<title>{mainTitle} - Početna</title>
 			</Head>
 
-			<Header products={products} />
+			<Header products={products} setQuantityValue={setQuantityValue} />
 			<Slider />
 
 			<main className="content">

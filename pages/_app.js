@@ -25,11 +25,12 @@ axios.interceptors.response.use(
 );
 
 const SetQuantityValue = (quantity, product) => {
-	const unit = product.categoryObj.unit;
-	switch (unit) {
-		case "g":
+	const category = product.category;
+
+	switch (category) {
+		case "Orašasti plodovi":
 			return `${quantity * 100} g`;
-		case "kg":
+		case "Voće":
 			return quantity * 500 >= 1000 ? (quantity * 500) / 1000 + " kg" : quantity * 500 + " g";
 		case "kom":
 			return quantity;
@@ -37,6 +38,7 @@ const SetQuantityValue = (quantity, product) => {
 			return quantity;
 	}
 };
+
 const UrlString = (string) => string.replaceAll(" ", "-");
 const SetPageTitle = (title) => {
 	document.title = title;
@@ -51,7 +53,10 @@ function MyApp({ Component, pageProps }) {
 	const notistackRef = React.useRef();
 
 	React.useEffect(() => {
-		axios.get("/api/product").then((res) => setProducts(res));
+		axios
+			.get("/api/product")
+			.then((res) => setProducts(res))
+			.catch((err) => console.error(err));
 	}, []);
 
 	React.useEffect(() => {
@@ -64,7 +69,9 @@ function MyApp({ Component, pageProps }) {
 		setIsMobile(Boolean(navigator.userAgent.match(/Android|BlackBerry|iPhone|iPad|iPod|Opera Mini|IEMobile|WPDesktop/i)));
 	}, []);
 
-	if (products.length === 0) return <Loading />;
+	if (products) {
+		if (products.length === 0) return <Loading />;
+	}
 
 	return (
 		<>
@@ -88,7 +95,7 @@ function MyApp({ Component, pageProps }) {
 				<SnackbarProvider
 					// ref={notistackRef}
 					maxSnack={1}
-					autoHideDuration={2000}
+					autoHideDuration={3000}
 					classes="hotification"
 					anchorOrigin={{ vertical: "top", horizontal: "left" }}
 				>

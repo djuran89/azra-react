@@ -21,7 +21,10 @@ export default function ProductForm(props) {
 	React.useEffect(() => {
 		axios
 			.get("/api/product/category")
-			.then((res) => (setCategories(res), setCopyCategories(res)))
+			.then((res) => {
+				setCategories(res);
+				setCopyCategories(res);
+			})
 			.catch((err) => enqueueSnackbar(err.message, { variant: "error" }));
 	}, []);
 
@@ -88,7 +91,7 @@ export default function ProductForm(props) {
 		dropDown.current.style.display = "block";
 
 		const value = e.target.value;
-		const copy = [...categories].filter((el) => el.toLowerCase().includes(value.toLowerCase()));
+		const copy = [...categories].filter((el) => el.name.toLowerCase().includes(value.toLowerCase()));
 
 		if (copy.length === 0) dropDown.current.style.display = "none";
 
@@ -98,24 +101,45 @@ export default function ProductForm(props) {
 
 	const onSetCategory = (category) => {
 		dropDown.current.style.display = "none";
-		setProduct({ ...product, category: category });
+		setProduct({ ...product, categoryObj: category });
 	};
 
 	return (
 		<section className={style.userInformation}>
 			<form onSubmit={onSubmitForm}>
 				<div className={`${`${style.form} form-group`} form-group`}>
-					<input id="firstname" ref={inputs} className={style.formInput} type="text" value={product.name} onChange={(e) => setProduct({ ...product, name: e.target.value })} />
+					<input
+						id="firstname"
+						ref={inputs}
+						className={style.formInput}
+						type="text"
+						value={product.name}
+						onChange={(e) => setProduct({ ...product, name: e.target.value })}
+					/>
 					<label htmlFor="firstname">Naziv</label>
 				</div>
 
 				<div className={`${style.form} form-group`}>
-					<input id="lastname" ref={inputs} className={style.formInput} type="number" value={product.price} onChange={(e) => setProduct({ ...product, price: e.target.value })} />
+					<input
+						id="lastname"
+						ref={inputs}
+						className={style.formInput}
+						type="number"
+						value={product.price}
+						onChange={(e) => setProduct({ ...product, price: e.target.value })}
+					/>
 					<label htmlFor="lastname">Cena</label>
 				</div>
 
 				<div className={`${style.form} form-group`}>
-					<input id="address" rows={3} className={style.formInput} type="text" value={product.description} onChange={(e) => setProduct({ ...product, description: e.target.value })} />
+					<input
+						id="address"
+						rows={3}
+						className={style.formInput}
+						type="text"
+						value={product.description}
+						onChange={(e) => setProduct({ ...product, description: e.target.value })}
+					/>
 					<label htmlFor="address">Opis</label>
 				</div>
 
@@ -126,13 +150,19 @@ export default function ProductForm(props) {
 				</div>
 
 				<div className={`${style.form} form-group`}>
-					<input id="zipcode" className={style.formInput} type="text" value={product.category} onChange={onChangeCategory} />
+					<input
+						id="zipcode"
+						className={style.formInput}
+						type="text"
+						value={product.categoryObj?.name}
+						onChange={onChangeCategory}
+					/>
 					<label htmlFor="zipcode">Kategorija</label>
 					<div id={style.dropDown} ref={dropDown}>
 						<ul id="list">
 							{copyCategories.map((el, i) => (
 								<li key={i} onClick={() => onSetCategory(el)}>
-									{el}
+									{el.name}
 								</li>
 							))}
 						</ul>
@@ -146,16 +176,6 @@ export default function ProductForm(props) {
 						<div className="crcle-btn" style={{ backgroundColor: makeColorRGBA(color2) }}></div>
 					</div>
 				</div>
-
-				{/* <div className={`${style.form} form-group`}>
-					<input id="city" className={style.formInput} type="text" value={product.colors1} onChange={(e) => setProduct({ ...product, colors1: e.target.value })} />
-					<label htmlFor="city">Color1</label>
-				</div>
-
-				<div className={`${`${style.form} form-group`}`}>
-					<input id="country" className={style.formInput} type="text" value={product.colors2} onChange={(e) => setProduct({ ...product, colors2: e.target.value })} />
-					<label htmlFor="country">Color2</label>
-				</div> */}
 
 				<div className={`${style.form} form-group`}>
 					<button type="submit" onSubmit={onSubmitForm}>

@@ -8,7 +8,7 @@ import style from "./../../pages/zavrsi-kupovinu/style.module.scss";
 export default function CompanyRender({ ...props }) {
 	const button = React.useRef();
 	const { enqueueSnackbar } = useSnackbar();
-	const { user, orders, setUser, setOrders, btnLoading } = props;
+	const { user, orders, setUser, setOrders, btnLoading, setShowModel } = props;
 	const [btnContent, setBtnContent] = React.useState("");
 
 	React.useEffect(() => {
@@ -54,10 +54,8 @@ export default function CompanyRender({ ...props }) {
 			disableBtn();
 
 			await axios.post("/api/order/company", { user, orders });
-			enqueueSnackbar("Poručbina je prihvaćena. Hvala.", { variant: "success" });
 			enableBtn();
-			setOrders([]);
-			Router.push('/');
+			setShowModel(true);
 		} catch (err) {
 			enableBtn();
 			enqueueSnackbar(err.message, { variant: "error" });
@@ -77,32 +75,78 @@ export default function CompanyRender({ ...props }) {
 
 			<form onSubmit={onSubmitForm}>
 				<div className={`${`${style.form} form-group`} form-group`}>
-					<input id="companyName" className={`${style.formInput} ${style.active}`} name="company-name" type="text" value={user.CompanyName} onChange={(e) => setUser({ ...user, CompanyName: e.target.value })} disabled />
+					<input
+						id="companyName"
+						className={`${style.formInput} ${style.active}`}
+						name="company-name"
+						type="text"
+						value={user.CompanyName}
+						onChange={(e) => setUser({ ...user, CompanyName: e.target.value })}
+						disabled
+					/>
 					<label htmlFor="companyName">Naziv firme</label>
 				</div>
 
 				<div className={`${`${style.form} form-group`} form-group`}>
-					<input id="Email" className={`${style.formInput} ${style.active}`} name="Email" type="text" value={user.Email} onChange={(e) => setUser({ ...user, Email: e.target.value })} disabled />
+					<input
+						id="Email"
+						className={`${style.formInput} ${style.active}`}
+						name="Email"
+						type="text"
+						value={user.Email}
+						onChange={(e) => setUser({ ...user, Email: e.target.value })}
+						disabled
+					/>
 					<label htmlFor="Email">Email</label>
 				</div>
 
 				<div className={`${`${style.form} form-group`} form-group`}>
-					<input id="PIB" className={`${style.formInput} ${style.active}`} name="pib" type="text" value={user.PIB} onChange={(e) => setUser({ ...user, PIB: e.target.value })} disabled />
+					<input
+						id="PIB"
+						className={`${style.formInput} ${style.active}`}
+						name="pib"
+						type="text"
+						value={user.PIB}
+						onChange={(e) => setUser({ ...user, PIB: e.target.value })}
+						disabled
+					/>
 					<label htmlFor="PIB">PIB</label>
 				</div>
 
 				<div className={`${`${style.form} form-group`} form-group`}>
-					<input id="deliveryAddress" className={`${style.formInput} ${style.active}`} name="delivery-address" type="text" value={user.DeliveryAddress} onChange={(e) => setUser({ ...user, DeliveryAddress: e.target.value })} />
+					<input
+						id="deliveryAddress"
+						className={`${style.formInput} ${style.active}`}
+						name="delivery-address"
+						type="text"
+						value={user.DeliveryAddress}
+						onChange={(e) => setUser({ ...user, DeliveryAddress: e.target.value })}
+					/>
 					<label htmlFor="deliveryAddress">Adresa za dostavu</label>
 				</div>
 
 				<div className={`${`${style.form} form-group`} form-group`}>
-					<input id="Phone" className={`${style.formInput} ${style.active}`} name="Phone" type="text" value={user.Phone} onChange={(e) => setUser({ ...user, Phone: e.target.value })} />
+					<input
+						id="Phone"
+						className={`${style.formInput} ${style.active}`}
+						name="Phone"
+						type="text"
+						value={user.Phone}
+						onChange={(e) => setUser({ ...user, Phone: e.target.value })}
+					/>
 					<label htmlFor="Phone">Borj telefona</label>
 				</div>
 
 				<div className={`${style.form} form-group`}>
-					<textarea rows={5} id="napomena" className={style.formInput} name="napomena" type="text" value={user.Napomena} onChange={(e) => setUser({ ...user, Napomena: e.target.value })} />
+					<textarea
+						rows={5}
+						id="napomena"
+						className={style.formInput}
+						name="napomena"
+						type="text"
+						value={user.Napomena}
+						onChange={(e) => setUser({ ...user, Napomena: e.target.value })}
+					/>
 					<label htmlFor="napomena">Napomena</label>
 				</div>
 

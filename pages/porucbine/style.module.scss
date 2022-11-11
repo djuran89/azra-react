@@ -1,0 +1,71 @@
+@import "./../../styles/varibles.scss";
+
+.container {
+	display: flex;
+	width: 1200px;
+	margin-inline: auto;
+	background-color: #fff;
+	border-inline: 1px solid $borderColor;
+	border-bottom: 1px solid $borderColor;
+	padding: 16px;
+	.orders {
+		display: flex;
+		flex-direction: row;
+		flex-wrap: wrap;
+		justify-content: space-between;
+		gap: 16px;
+		width: 100%;
+	}
+	.order {
+		padding: 16px;
+		width: calc(50% - 8px);
+		background-color: #fff;
+		border: 1px solid $borderColor;
+		border-radius: 4px;
+	}
+	.title {
+		padding-bottom: 16px;
+		font-weight: bold;
+		font-size: 14px;
+	}
+	table {
+		width: 100%;
+		border-collapse: separate;
+		border-spacing: 0px;
+	}
+	.orderList {
+	}
+	table {
+		font-size: 14px;
+	}
+	table th {
+		text-align: left;
+		padding: 4px 16px;
+		background-color: rgba(0, 0, 0, 0.07);
+		background-color: $primaryBGColor;
+		color: #fff;
+	}
+	table td {
+		padding: 4px 16px;
+	}
+	tr:nth-child(even) {
+		background-color: rgba(0, 0, 0, 0.03);
+	}
+	tr:nth-child(odd) {
+		background: #fff;
+	}
+	.total {
+		font-weight: bold;
+		text-align: right;
+		td {
+			border-top: 1px solid #333;
+			background-color: #fff;
+		}
+	}
+}
+
+@media only screen and (max-width: 600px) {
+	.container {
+		margin-top: 0px;
+	}
+}
