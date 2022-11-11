@@ -54,35 +54,15 @@ export default function FizickaLica(props) {
 
 			enableBtn();
 			setInfo(infoObject);
-			setShowModel(true)
+			setShowModel(true);
 		} catch (err) {
 			enqueueSnackbar(err.message, { variant: "error" });
 			enableBtn();
 		}
 	};
 
-	const finishOrder = () => {
-		setOrders([]);
-		Router.push("/");
-	};
-
 	return (
 		<section className={style.userInformation}>
-			<div className="model-box">
-				<div className="content">
-					<div className="header">Vaša poručbina je prihvaćena</div>
-					<div className="body">
-						<div className="left">
-							<span className="material-symbols-outlined">verified</span>
-						</div>
-						<div>RO</div>
-					</div>
-					<div className="footer">
-						<button onClick={finishOrder}>Zatvori</button>
-					</div>
-				</div>
-			</div>
-
 			<form onSubmit={onSubmitForm}>
 				<h3>Adresa za isporuku </h3>
 

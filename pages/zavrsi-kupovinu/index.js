@@ -107,7 +107,7 @@ const FinishOrder = (props) => {
 						<div className="header">Vaša poručbina je prihvaćena</div>
 						<div className="body">
 							<div className="left">
-								<span class="material-symbols-outlined">verified</span>
+								<span className="material-symbols-outlined">verified</span>
 							</div>
 							<div className="right">{renderOrders}</div>
 						</div>
