@@ -6,7 +6,7 @@ import React from "react";
 
  import style from "./style.module.scss";
 
- export default function productForm(props) {
+ export default function ProductForm(props) {
  	const router = useRouter();
  	const { enqueueSnackbar } = useSnackbar();
  	const { product, setProduct } = props;
