@@ -28,14 +28,12 @@ const SetQuantityValue = (quantity, product) => {
 	const category = product.category;
 
 	switch (category) {
-		case "Orašasti plodovi":
-			return `${quantity * 100} g`;
 		case "Voće":
 			return quantity * 500 >= 1000 ? (quantity * 500) / 1000 + " kg" : quantity * 500 + " g";
-		case "kom":
+		case "Sokovi":
 			return quantity;
 		default:
-			return quantity;
+			return `${quantity * 100} g`;
 	}
 };
 
