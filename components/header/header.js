@@ -78,7 +78,7 @@ const Header = (props) => {
 						{!user ? (
 							<div className="login-btn">
 								<Link href={`/registracija`}>
-									<a className="link">Registracija</a>
+									<a className="link register">Registracija</a>
 								</Link>
 
 								<Link href={`/login`}>

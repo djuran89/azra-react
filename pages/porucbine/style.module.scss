@@ -10,7 +10,7 @@
 	padding: 16px;
 	.orders {
 		display: flex;
-		flex-direction: row;
+		flex-direction: column;
 		flex-wrap: wrap;
 		justify-content: space-between;
 		gap: 16px;
@@ -67,5 +67,11 @@
 @media only screen and (max-width: 600px) {
 	.container {
 		margin-top: 0px;
+		width: 100vw;
+		background-color: #eee;
+		.order {
+			width: 100%;
+			border-radius: 4px;
+		}
 	}
 }

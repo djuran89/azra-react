@@ -9,10 +9,11 @@ import { userAction } from "../../redux/action";
 
 import style from "./../../pages/zavrsi-kupovinu/style.module.scss";
 import newStyle from "./style.module.scss";
+import Header from "../../components/header/header";
 
 const btnLoading = `<span id="loading"><span class="material-symbols-outlined">cached</span> Obradjuje se...</span>`;
 export default function Registracija(props) {
-	const { mainTitle } = props;
+	const { mainTitle, products, setQuantityValue } = props;
 	const button = React.useRef();
 	const dispatch = useDispatch();
 	const { enqueueSnackbar } = useSnackbar();
@@ -64,6 +65,7 @@ export default function Registracija(props) {
 			<Head>
 				<title>{mainTitle} - Registracija</title>
 			</Head>
+			<Header products={products} setQuantityValue={setQuantityValue} />
 
 			<div className={`${style.userInformation} ${newStyle.container}`}>
 				<form onSubmit={onSubmitForm}>
